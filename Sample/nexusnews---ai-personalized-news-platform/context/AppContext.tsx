@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User, Language, Theme } from '../types';
+import { User, Language, Theme, Article } from '../types';
 import { TOPICS, SOURCES } from '../constants';
 
 interface AppContextType {
@@ -14,7 +14,7 @@ interface AppContextType {
   toggleTheme: () => void;
   toggleFollowTopic: (topic: string) => void;
   toggleFollowSource: (source: string) => void;
-  toggleBookmark: (articleId: string) => void;
+  toggleBookmark: (article: Article) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -81,14 +81,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     });
   };
 
-  const toggleBookmark = (articleId: string) => {
+  const toggleBookmark = (article: Article) => {
     if (!user) return;
-    const isBookmarked = user.bookmarks.includes(articleId);
+    const isBookmarked = user.bookmarks.some(b => b.id === article.id);
     setUser({
       ...user,
       bookmarks: isBookmarked
-        ? user.bookmarks.filter(id => id !== articleId)
-        : [...user.bookmarks, articleId]
+        ? user.bookmarks.filter(b => b.id !== article.id)
+        : [...user.bookmarks, article]
     });
   };
 

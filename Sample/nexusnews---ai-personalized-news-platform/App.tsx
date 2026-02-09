@@ -4,6 +4,7 @@ import { useApp, AppProvider } from './context/AppContext';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import NewsCard from './components/NewsCard';
+import ArticleDetail from './components/ArticleDetail';
 import Auth from './components/Auth';
 import { Article, Language } from './types';
 import { fetchNewsArticles } from './services/geminiService';
@@ -15,6 +16,7 @@ const MainContent: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState<'feed' | 'bookmarks'>('feed');
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const t = TRANSLATIONS[language];
 
   const loadArticles = useCallback(async () => {
@@ -33,8 +35,12 @@ const MainContent: React.FC = () => {
 
   if (!isAuthenticated) return <Auth />;
 
+  if (selectedArticle) {
+    return <ArticleDetail article={selectedArticle} onBack={() => setSelectedArticle(null)} />;
+  }
+
   const displayArticles = view === 'bookmarks' 
-    ? articles.filter(a => user?.bookmarks.includes(a.id))
+    ? user?.bookmarks || []
     : articles;
 
   return (
@@ -89,7 +95,11 @@ const MainContent: React.FC = () => {
             ) : displayArticles.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {displayArticles.map(article => (
-                  <NewsCard key={article.id} article={article} />
+                  <NewsCard 
+                    key={article.id} 
+                    article={article}
+                    onArticleClick={setSelectedArticle}
+                  />
                 ))}
               </div>
             ) : (

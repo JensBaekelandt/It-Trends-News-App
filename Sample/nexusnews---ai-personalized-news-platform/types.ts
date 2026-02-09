@@ -7,7 +7,7 @@ export interface User {
   name: string;
   followedTopics: string[];
   followedSources: string[];
-  bookmarks: string[];
+  bookmarks: Article[];
 }
 
 export interface Article {
