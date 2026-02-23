@@ -1,5 +1,6 @@
 // Current language state (uses locales.js for translations)
 let currentLanguage = locales.default;
+let currentTheme = 'dark';
 
 // DOM Elements
 const languageBtn = document.getElementById('languageBtn');
@@ -9,6 +10,7 @@ const langOptions = document.querySelectorAll('.lang-option');
 const createAccountBtn = document.getElementById('createAccountBtn');
 const loginBtn = document.getElementById('loginBtn');
 const googleBtn = document.getElementById('googleBtn');
+const themeToggle = document.getElementById('themeToggle');
 
 // Initialize the application
 function init() {
@@ -17,6 +19,13 @@ function init() {
     if (savedLang && locales.isSupported(savedLang)) {
         currentLanguage = savedLang;
         updateLanguage(currentLanguage);
+    }
+
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem('preferredTheme');
+    if (savedTheme) {
+        currentTheme = savedTheme;
+        applyTheme(currentTheme);
     }
 
     // Set up event listeners
@@ -30,6 +39,13 @@ function setupEventListeners() {
         e.stopPropagation();
         languageDropdown.classList.toggle('active');
     });
+
+    // Theme toggle
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            toggleTheme();
+        });
+    }
 
     // Language option selection
     langOptions.forEach(option => {
@@ -80,6 +96,22 @@ function changeLanguage(lang) {
         locales.current = lang;
         localStorage.setItem('preferredLanguage', lang);
         updateLanguage(lang);
+    }
+}
+
+// Toggle theme function
+function toggleTheme() {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('preferredTheme', currentTheme);
+    applyTheme(currentTheme);
+}
+
+// Apply theme to document
+function applyTheme(theme) {
+    if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+        document.documentElement.removeAttribute('data-theme');
     }
 }
 
