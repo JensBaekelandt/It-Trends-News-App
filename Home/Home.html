@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NewsRoom | Personalized Home Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: "Work Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav {
+            background-color: #283039;
+        }
+        .dark .active-nav {
+            background-color: #283039;
+        }
+        .light .active-nav {
+            background-color: #e5e7eb;
+            color: #137fec;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white min-h-screen">
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[#d1d5db] dark:border-[#283039] bg-white dark:bg-background-dark px-6 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.578 8.578C5.528 11.628 3.451 15.514 2.609 19.745C1.768 23.976 2.2 28.361 3.851 32.346C5.501 36.331 8.297 39.738 11.883 42.134C15.47 44.531 19.687 45.81 24 45.81C28.314 45.81 32.53 44.531 36.117 42.134C39.703 39.738 42.499 36.331 44.149 32.346C45.8 28.361 46.232 23.976 45.391 19.745C44.549 15.515 42.472 11.628 39.422 8.578L24 24L8.578 8.578Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-[#111418] dark:text-white">NewsRoom</h2>
+</div>
+
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="flex min-w-[60px] cursor-pointer items-center justify-center rounded-lg h-10 px-3 bg-primary text-white text-xs font-bold tracking-wider">
+                    NL / EN
+                </button>
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-lg bg-white dark:bg-[#283039] border border-[#d1d5db] dark:border-none text-[#111418] dark:text-white">
+<span class="material-symbols-outlined">light_mode</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-[#d1d5db] dark:border-[#283039]" data-alt="User profile avatar portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCpbqFAAwgpFzD0LJvqvh9kI9zpNqUIXZ7gRebZBbPLvQtGJsjY6__m7M4W_pnSMXEOZwWpU93jxIZ_DzrqrGvuAillA9S43dyQabxBbXdDroBfWHJ4ex7UzuvZKeyjtr9ju9tuyoHJzgjUmi70cHUFtsWye_6xkUENkK6-d-lI4uzi1XBPZUPVV4Qif0DkUloDEW1KveFrMXdKmHNsMo04Xklhny5wgvxnAPmNUS9Sn3bR6B3NjX6jmCxY2u95I1tcHqr5p9zv");'></div>
+</div>
+</header>
+<div class="max-w-[1440px] mx-auto flex">
+<aside class="w-64 hidden xl:flex flex-col h-[calc(100vh-64px)] sticky top-16 p-4 gap-4 border-r border-[#d1d5db] dark:border-[#283039]">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg active-nav">
+<span class="material-symbols-outlined">home</span>
+<p class="text-sm font-medium">Home</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-[#283039] transition-colors cursor-pointer text-[#4b5563] dark:text-white">
+<span class="material-symbols-outlined">explore</span>
+<p class="text-sm font-medium">Explore</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-[#283039] transition-colors cursor-pointer text-[#4b5563] dark:text-white">
+<span class="material-symbols-outlined">bookmark</span>
+<p class="text-sm font-medium">Bookmarks</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-[#283039] transition-colors cursor-pointer text-[#4b5563] dark:text-white">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</div>
+</div>
+<div class="mt-auto p-4 bg-primary/10 rounded-xl border border-primary/20">
+<p class="text-xs font-bold text-primary uppercase tracking-wider mb-2">Pro Plan</p>
+<p class="text-xs text-[#4b5563] dark:text-[#9dabb9] mb-3">Get unlimited access to premium sources.</p>
+<button class="w-full py-2 bg-primary text-white text-xs font-bold rounded-lg">Upgrade Now</button>
+</div>
+</aside>
+<main class="flex-1 min-w-0 pb-10">
+<div class="max-w-[800px] mx-auto">
+<div class="pt-8 px-6">
+<h1 class="text-[#111418] dark:text-white text-3xl font-bold tracking-tight">For You</h1>
+<p class="text-[#4b5563] dark:text-[#9dabb9] text-sm mt-1">Curated stories based on your interests</p>
+</div>
+<div class="flex gap-3 px-6 py-6 overflow-x-auto no-scrollbar">
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary px-5 cursor-pointer">
+<p class="text-white text-sm font-medium">All Stories</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-[#283039] px-5 border border-[#d1d5db] dark:border-none cursor-pointer hover:bg-gray-50 dark:hover:bg-[#343e4a]">
+<p class="text-sm font-medium">Tech</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-[#283039] px-5 border border-[#d1d5db] dark:border-none cursor-pointer hover:bg-gray-50 dark:hover:bg-[#343e4a]">
+<p class="text-sm font-medium">Sport</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-[#283039] px-5 border border-[#d1d5db] dark:border-none cursor-pointer hover:bg-gray-50 dark:hover:bg-[#343e4a]">
+<p class="text-sm font-medium">Politics</p>
+</div>
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white/50 dark:bg-[#283039]/50 px-5 border border-dashed border-[#d1d5db] dark:border-[#4b5563] cursor-pointer">
+<p class="text-sm font-medium text-primary">+ Manage</p>
+</div>
+</div>
+<div class="flex flex-col gap-6 px-6">
+<div class="group bg-white dark:bg-[#1a242f] rounded-xl overflow-hidden shadow-sm border border-[#e5e7eb] dark:border-[#283039] flex flex-col sm:flex-row h-auto sm:h-48 cursor-pointer hover:border-primary transition-all">
+<div class="w-full sm:w-64 h-48 sm:h-full bg-center bg-cover shrink-0" data-alt="High tech laboratory with researchers" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCy7zC5jCV2tMFZTdEG6GNphzrfrLZyE1W8dKJfLEuCS-sil-2ULyokq5xNECYbWfBVGHAhGaMbi6VUS64NrAoVsG-tlbEb_lvNf8HSJwq39JkVHLekY38dcxG24c8ROY1VYoONE4Ilgws70df8TlRg6Msh1oX2YwNqpJ9LVKmEKd8X0Mbdi0-DxfwrviV0F8jm4trc40u5UeW9VhPM_o7XyPrYcMPaogdlFaxdRlpmCFc5TqcdDTRocXBAFDegTquzzi85Yazy");'></div>
+<div class="flex flex-col justify-between p-5 grow">
+<div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-primary text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-primary/10 rounded">Innovation</span>
+<button class="text-[#9dabb9] hover:text-primary"><span class="material-symbols-outlined text-xl">bookmark</span></button>
+</div>
+<h3 class="text-lg font-bold leading-snug group-hover:text-primary transition-colors text-[#111418] dark:text-white">Quantum Computing: The Next Frontier in Global Security</h3>
+<p class="text-sm text-[#4b5563] dark:text-[#9dabb9] line-clamp-2 mt-2">New breakthroughs in quantum error correction could accelerate the deployment of practical quantum computers by years...</p>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-[#9dabb9]">
+<span class="font-bold text-[#111418] dark:text-white">The Verge</span>
+<span>•</span>
+<span>12 min read</span>
+<span>•</span>
+<span>2 hours ago</span>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-[#1a242f] rounded-xl overflow-hidden shadow-sm border border-[#e5e7eb] dark:border-[#283039] flex flex-col sm:flex-row h-auto sm:h-48 cursor-pointer hover:border-primary transition-all">
+<div class="w-full sm:w-64 h-48 sm:h-full bg-center bg-cover shrink-0" data-alt="Modern sustainable architecture in a city" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDO__--jM-fK7zSfsxqasDgoAhwGOU62dZH14ZLPiyR43rXtRdsZF9Cu_SzHugAK8TViV86ttiGcdRot2JiCxeYkkZgng-qbnMUgbEz1aaCR_9NONzJApj1dM2crEVL1e5Xrb0q_m6V7ZFNXRSY105GNVHHecZYuuX2pzYLpoYvXHg0yOEnIg1oGLyy4OD1_A0yHaEM-ljwxCy9sEpdG-lPWaETVjo8PuCNa2c07_Hi1EqZfv5y51GRwdGxD6KRsYTChXjoZQPM");'></div>
+<div class="flex flex-col justify-between p-5 grow">
+<div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-primary text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-primary/10 rounded">Climate</span>
+<button class="text-[#9dabb9] hover:text-primary"><span class="material-symbols-outlined text-xl">bookmark</span></button>
+</div>
+<h3 class="text-lg font-bold leading-snug group-hover:text-primary transition-colors text-[#111418] dark:text-white">How 'Sponge Cities' are Fighting the Urban Flood Crisis</h3>
+<p class="text-sm text-[#4b5563] dark:text-[#9dabb9] line-clamp-2 mt-2">Architects are turning to nature-based solutions to manage stormwater in the world's fastest-growing metropolises...</p>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-[#9dabb9]">
+<span class="font-bold text-[#111418] dark:text-white">National Geographic</span>
+<span>•</span>
+<span>8 min read</span>
+<span>•</span>
+<span>4 hours ago</span>
+</div>
+</div>
+</div>
+<div class="group bg-white dark:bg-[#1a242f] rounded-xl overflow-hidden shadow-sm border border-[#e5e7eb] dark:border-[#283039] flex flex-col sm:flex-row h-auto sm:h-48 cursor-pointer hover:border-primary transition-all">
+<div class="w-full sm:w-64 h-48 sm:h-full bg-center bg-cover shrink-0" data-alt="Professional tennis player serving" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCpcHLjk8UZnsvoMFAew0ibDMpNbpjjF__fFrducf_UcZea0pkbKhF2mQRTekDXkCBH9ZNeMWd71hC-DWja2nvwrlFaNvMSr1o_bLed2wN_mm3o03jBMrFEkbDLmi2CmXsF4NgZ0Lfj8SdEaVtcij7_jf3upxFT25fAao5NxdAJdXWGvQoab2UwIX8wJCns6ROgPtVD1EDN6K6Gu9cUt5IgQZ0HFytGKtf_r4b1HCiwsago5Yq6JMbWofVKglIp66VBHHl0YogQ");'></div>
+<div class="flex flex-col justify-between p-5 grow">
+<div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-primary text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-primary/10 rounded">Sports</span>
+<button class="text-[#9dabb9] hover:text-primary"><span class="material-symbols-outlined text-xl">bookmark</span></button>
+</div>
+<h3 class="text-lg font-bold leading-snug group-hover:text-primary transition-colors text-[#111418] dark:text-white">The Rivalry That Is Redefining Modern Tennis Statistics</h3>
+<p class="text-sm text-[#4b5563] dark:text-[#9dabb9] line-clamp-2 mt-2">After last night's finals, the data shows that the gap between the top three and the rest of the field is widening...</p>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-[#9dabb9]">
+<span class="font-bold text-[#111418] dark:text-white">ESPN Sports</span>
+<span>•</span>
+<span>15 min read</span>
+<span>•</span>
+<span>6 hours ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<aside class="hidden lg:flex flex-col w-full max-w-[340px] h-[calc(100vh-64px)] sticky top-16">
+
+  <!-- Scrollbaar gedeelte -->
+  <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+
+    <!-- Trending Card -->
+    <div class="bg-white dark:bg-[#1a242f] rounded-2xl p-6 shadow-sm border border-[#e5e7eb] dark:border-[#283039]">
+      <h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">trending_up</span>
+        Trending
+      </h2>
+
+      <div class="space-y-6">
+        <div>
+          <p class="text-xs font-bold text-primary mb-1">Economy</p>
+          <p class="text-sm font-semibold leading-snug">Global market shifts as central banks announce new rates</p>
+          <p class="text-xs text-[#9dabb9] mt-1">14.2k readers currently</p>
+        </div>
+
+        <div>
+          <p class="text-xs font-bold text-primary mb-1">Space</p>
+          <p class="text-sm font-semibold leading-snug">Mars rover discovers unexpected crystal formations</p>
+          <p class="text-xs text-[#9dabb9] mt-1">8.5k readers currently</p>
+        </div>
+
+        <div>
+          <p class="text-xs font-bold text-primary mb-1">Health</p>
+          <p class="text-sm font-semibold leading-snug">New study links forest bathing to lower cortisol levels</p>
+          <p class="text-xs text-[#9dabb9] mt-1">5.1k readers currently</p>
+        </div>
+      </div>
+
+      <button class="mt-6 text-primary text-xs font-bold hover:underline">
+        View All Trends
+      </button>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="bg-gradient-to-br from-primary to-blue-600 rounded-2xl p-6 text-white shadow-md">
+      <h3 class="font-bold text-lg mb-2">Weekly Newsletter</h3>
+      <p class="text-sm text-white/80 mb-5">
+        The most important stories of the week, delivered to your inbox every Sunday morning.
+      </p>
+
+      <div class="space-y-3">
+        <input 
+          type="email"
+          placeholder="Your email"
+          class="w-full rounded-lg px-4 py-2 text-sm text-black focus:outline-none"
+        />
+        <button class="w-full bg-white text-primary font-bold py-2 rounded-lg flex items-center justify-center">
+          Subscribe
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer (blijft onderaan) -->
+  <div class="px-6 py-4 border-t border-[#e5e7eb] dark:border-[#283039] text-xs text-[#9dabb9] space-x-4">
+    <a class="hover:text-primary" href="#">Privacy Policy</a>
+    <a class="hover:text-primary" href="#">Terms of Service</a>
+    <a class="hover:text-primary" href="#">Cookie Policy</a>
+    <span class="block mt-2">© 2026 NewsRoom Inc.</span>
+  </div>
+
+</aside>
+</div>
+</body></html>
+<style>
+aside::-webkit-scrollbar {
+  width: 6px;
+}
+aside::-webkit-scrollbar-thumb {
+  background: #137fec;
+  border-radius: 10px;
+}
+</style>
