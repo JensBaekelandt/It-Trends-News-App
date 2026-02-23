@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Article Reading View | Focused Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background": "#ffffff",
+                        "sidebar": "#f8fafc",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Work Sans", sans-serif;
+            background-color: #ffffff;
+            color: #0f172a;
+        }
+        .prose p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            color: #1e293b;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white">
+<div class="flex-1 flex flex-col">
+<header class="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/80 backdrop-blur-md px-4 md:px-8 py-3">
+<div class="max-w-[1000px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center rounded-lg h-9 px-3 gap-2 text-sm font-semibold border border-slate-200 bg-white hover:bg-slate-50 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+                    Back to Feed
+                </button>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-slate-100 rounded-lg p-1 mr-2">
+<button class="flex items-center justify-center h-7 px-3 text-xs font-medium hover:bg-white rounded transition-all">A-</button>
+<button class="flex items-center justify-center h-7 px-3 text-xs font-bold bg-white rounded shadow-sm">A+</button>
+</div>
+<button class="flex items-center justify-center rounded-lg h-9 w-9 border border-slate-200 text-slate-600 hover:bg-slate-50">
+<span class="material-symbols-outlined text-xl">share</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 pt-8 pb-20">
+<div class="max-w-[800px] mx-auto px-4 md:px-8">
+<nav class="flex items-center gap-2 mb-8 text-sm font-medium text-slate-500">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-base">chevron_right</span>
+<a class="hover:text-primary" href="#">Technology</a>
+<span class="material-symbols-outlined text-base">chevron_right</span>
+<span class="text-slate-900">Article</span>
+</nav>
+<header class="mb-8 text-center sm:text-left">
+<h1 class="text-slate-900 tracking-tight text-4xl md:text-5xl font-extrabold leading-tight mb-8">
+                    The Future of Decentralized News Networks: A Deep Dive into Modern Media
+                </h1>
+<div class="flex flex-wrap items-center justify-between gap-6 pb-8 mb-8 border-b border-slate-100">
+<div class="flex items-center gap-4 mx-auto sm:mx-0">
+<div class="size-12 rounded-full bg-cover bg-center border border-slate-100" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA2Bjx7Lah7Dyi3ZcsrSkWa-0cwf_l0FArxOPsytmEYH2xTSl-gArujvbV3-CdLA84Bf0V8RiGtU3t3oGt1CI3In5iYibk-k3dQJLL6lAKaeJLTcLR5jvIssGXQhYOqt1kNQxsnvuphOLm26pGWcMgJ4q--oNYiFJKjbsYQBpvvWdKoSd3dZigU9Eci8GutN6ltsacrM6tARPCE_ywswlwRc2B6P_fYmcVg4PJoTA8ncINykW4Y1lLGbsxI6ggrXWeoKbVUfhZl");'></div>
+<div class="text-left">
+<p class="text-slate-900 font-bold">Marcus Chen</p>
+<p class="text-slate-500 text-sm">Senior Tech Correspondent • Oct 24, 2023</p>
+</div>
+</div>
+<!-- <div class="flex items-center gap-4 text-slate-500 text-sm font-medium mx-auto sm:mx-0">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-lg">schedule</span> 8 min read</span>
+</div> -->
+</div>
+<div class="mb-10 text-left">
+<button class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-slate-100 text-slate-900 font-bold rounded-full border border-slate-200 shadow-sm transition-all mb-6">
+<span class="material-symbols-outlined text-xl text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span>AI Summary Generated</span>
+</button>
+<div class="p-8 bg-slate-50 rounded-2xl border border-slate-200 shadow-sm" id="ai-summary-card">
+<div class="flex items-center gap-3 mb-6">
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">magic_button</span>
+</div>
+<h3 class="font-bold text-slate-900 text-lg">Key Executive Summary</h3>
+</div>
+<div class="space-y-6">
+<p class="text-slate-700 leading-relaxed text-lg">
+                                This article explores the systemic shift in the media landscape toward decentralized models. By leveraging blockchain and cryptographic verification, these new networks aim to eliminate centralized control and restore trust in digital journalism.
+                            </p>
+<ul class="space-y-4">
+<li class="flex gap-4 text-slate-700">
+<div class="mt-1.5 size-1.5 rounded-full bg-primary shrink-0"></div>
+<span class="leading-relaxed font-medium">Decentralized networks utilize blockchain to distribute information across independent nodes, mitigating corporate control.</span>
+</li>
+<li class="flex gap-4 text-slate-700">
+<div class="mt-1.5 size-1.5 rounded-full bg-primary shrink-0"></div>
+<span class="leading-relaxed font-medium">Cryptographic signatures provide a verifiable audit trail for every story, enabling peer-reviewed reputation scores.</span>
+</li>
+<li class="flex gap-4 text-slate-700">
+<div class="mt-1.5 size-1.5 rounded-full bg-primary shrink-0"></div>
+<span class="leading-relaxed font-medium">Structural advantages include robust censorship resistance, direct monetization for journalists, and democratic governance.</span>
+</li>
+</ul>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-200 flex justify-between items-center">
+<span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Analysis by NeuralInsight v4.2</span>
+<div class="flex gap-4">
+<button class="flex items-center gap-1 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">thumb_up</span>
+<span class="text-[10px] font-bold">Helpful</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-lg">thumb_down</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="mb-12">
+<figure class="rounded-2xl overflow-hidden border border-slate-200">
+<div class="aspect-[16/9] w-full bg-slate-100 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAab6W4GIS23dZVJS44o0SSBtPVwGcRy_cP25y4DjcNM_4rgozG0Pi9DR4t--jjp3RTW21xlplHHAYMPkpx7LD12oM8vBi7qiC1Daz-3YR_i7lELvcAapxJIe04EB9ZD7ZYCP5T-z4sEno2AMaUQIp6FswYrmy0nIc6TNPVk-q_7IfYFEA3fNM-_TfMOgvM58_QA_kA2YoiqwMmAAOM6ke_03pAfSGQjPxC2HTzHSvWX4Lfw4mwnGYgFYxVTuxfoor3VSC4vAdc");'></div>
+<figcaption class="p-4 bg-slate-50 text-slate-500 text-sm italic text-center">
+                        Visual representation of a decentralized node architecture in the new media landscape.
+                    </figcaption>
+</figure>
+</div>
+<article class="prose prose-lg max-w-none">
+<p class="text-xl leading-relaxed font-semibold text-slate-800 mb-8">
+                    In an era defined by information overload and centralized control, a new wave of decentralized news networks is emerging to challenge the status quo. 
+                </p>
+<h2 class="text-2xl font-bold text-slate-900 mt-10 mb-6">The Shift from Centralization</h2>
+<p>
+                    The traditional media landscape has long been dominated by a handful of massive conglomerates. While these institutions have provided stability, they've also become single points of failure for truth and objectivity. Decentralized networks leverage blockchain technology to distribute the "ledger of truth" across thousands of independent nodes.
+                </p>
+<blockquote class="my-10 p-8 bg-blue-50 border-l-4 border-primary rounded-r-2xl">
+<p class="text-xl font-medium italic text-slate-900 mb-0">
+                        "The goal isn't just to move news to a different server; it's to fundamentally change how credibility is verified in the digital age."
+                    </p>
+</blockquote>
+<h2 class="text-2xl font-bold text-slate-900 mt-10 mb-6">Verifiable Credibility</h2>
+<p>
+                    By using cryptographic signatures, every piece of information can be traced back to its source. This doesn't just stop "fake news"—it makes the provenance of information a public record. Reporters gain reputation scores through peer-reviewed accuracy, rather than corporate backing.
+                </p>
+<h3 class="text-xl font-bold text-slate-900 mt-8 mb-4">Key Benefits of Decentralization:</h3>
+<ul class="list-none pl-0 space-y-4 mb-8">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">check_circle</span>
+<span><strong>Censorship Resistance:</strong> Content cannot be removed by a single authority.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">check_circle</span>
+<span><strong>Direct Monetization:</strong> Micropayments go directly to creators, bypassing ad-tech middlemen.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">check_circle</span>
+<span><strong>Community Governance:</strong> Editorial standards are set by the network participants.</span>
+</li>
+</ul>
+<p>
+                    As we look toward the next decade, the integration of AI with these decentralized platforms promises a personalized yet verifiable news feed. The challenges—ranging from scalability to user onboarding—remain significant, but the momentum is undeniable.
+                </p>
+</article>
+<div class="flex flex-wrap gap-2 mt-12 pt-8 border-t border-slate-100">
+<span class="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-600 uppercase tracking-tight">#BLOCKCHAIN</span>
+<span class="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-600 uppercase tracking-tight">#FUTUREOFMEDIA</span>
+<span class="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-600 uppercase tracking-tight">#TECHNOLOGY</span>
+</div>
+<section class="mt-16 bg-slate-50 p-8 rounded-3xl">
+<h3 class="text-xl font-bold mb-8 text-slate-900 flex items-center gap-2">
+<span class="material-symbols-outlined">auto_stories</span>
+                    Related Stories
+                </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="group cursor-pointer">
+<div class="aspect-[16/10] rounded-xl overflow-hidden bg-slate-200 mb-4 shadow-sm">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3uI43nV4yviSwd3nOogbzHd_eZyYUs6GyJTtz8qjj0jFWCFZzBJSEVzEMjvGqdMDrlyfAi0MJ6nX-cDnauE_kdm_zMGASqJ86ZLGXCaKo3v--DZBfvnz4uW9LKF1eCYjk3LLGoQWLd1yLBVRYeUsLU6cz2FJjgsBuCGacQckoKnZJx9iKnObnashrkWzIB8HUC5FD5GvtJEuf4-EtTk8ls6f_j5jlxlp_QVpWSzWeBaUPVN3uXEDevWbPn5w83w2XDlklcYwA");'></div>
+</div>
+<h4 class="font-bold text-slate-900 group-hover:text-primary transition-colors leading-snug">How Web3 is Changing the Creator Economy Forever</h4>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-[16/10] rounded-xl overflow-hidden bg-slate-200 mb-4 shadow-sm">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAn1_6mvwv18Qm_ITuMuL7dVh_hvKJYIfROe_FngBKJ70859b15OavaAB6r6LwS7SZkFJndHUgzRI73h6-XCTP6RtrgmDnF2-fGwcj3VPN1P-Rbyf_JbNfiUbS-6ZcGbwghH3KcVC9lG3dJkBUdSkgfs42MaFBFIPXjcOx3AV6Tb_dBfWBMbckH2IiPKITjkGrxmdMyaKaM5U4MHcIk1oqIPBZU_qvLyNogXrflXESjmkovp53R0M4kdSPuFi3frOcmE4u5I73h");'></div>
+</div>
+<h4 class="font-bold text-slate-900 group-hover:text-primary transition-colors leading-snug">Top 10 Emerging Technologies to Watch in 2024</h4>
+</div>
+</div>
+</section>
+</div>
+</main>
+<div id="floatingToolbar" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-300">
+<div class="flex items-center gap-1 p-2 bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200">
+
+
+<div class="w-px h-8 bg-slate-200 mx-1"></div>
+<button class="flex items-center justify-center h-12 w-12 rounded-xl hover:bg-slate-100 text-slate-700 transition-all" title="Bookmark">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+<button class="flex items-center justify-center h-12 w-12 rounded-xl hover:bg-slate-100 text-slate-700 transition-all" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to Top">
+<span class="material-symbols-outlined">arrow_upward</span>
+</button>
+<button class="flex items-center justify-center h-12 w-12 rounded-xl hover:bg-slate-100 text-slate-700 transition-all" onclick="toggleToolbar()" title="Hide">
+<span class="material-symbols-outlined">arrow_downward</span>
+</button>
+</div>
+<div class="w-px h-8 bg-slate-200 mx-1"></div>
+</div>
+</div>
+
+</body></html>
+<script src="ArticleView.js"></script>
