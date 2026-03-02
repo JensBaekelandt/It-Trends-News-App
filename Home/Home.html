@@ -43,8 +43,31 @@
             color: #137fec;
         }
     </style>
+
+    <style>
+  /* UI states: blur page content while loading */
+  body.is-loading #pageContent {
+    filter: blur(8px);
+    opacity: 0.6;
+    pointer-events: none;
+    transition: filter 200ms ease, opacity 200ms ease;
+  }
+</style>
+
+<style>
+aside::-webkit-scrollbar {
+  width: 6px;
+}
+aside::-webkit-scrollbar-thumb {
+  background: #137fec;
+  border-radius: 10px;
+}
+</style>
+
 </head>
 <body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white min-h-screen">
+<div id="pageContent">
+
 <header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[#d1d5db] dark:border-[#283039] bg-white dark:bg-background-dark px-6 py-3">
 <div class="flex items-center gap-8">
 <div class="flex items-center gap-3 text-primary">
@@ -101,7 +124,7 @@
 <h1 class="text-[#111418] dark:text-white text-3xl font-bold tracking-tight">For You</h1>
 <p class="text-[#4b5563] dark:text-[#9dabb9] text-sm mt-1">Curated stories based on your interests</p>
 </div>
-<div class="flex gap-3 px-6 py-6 overflow-x-auto no-scrollbar">
+<div id="feedFilters" class="flex gap-3 px-6 py-6 overflow-x-auto no-scrollbar">
 <div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary px-5 cursor-pointer">
 <p class="text-white text-sm font-medium">All Stories</p>
 </div>
@@ -117,8 +140,33 @@
 <div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white/50 dark:bg-[#283039]/50 px-5 border border-dashed border-[#d1d5db] dark:border-[#4b5563] cursor-pointer">
 <p class="text-sm font-medium text-primary">+ Manage</p>
 </div>
+
 </div>
-<div class="flex flex-col gap-6 px-6">
+<!-- EMPTY STATE (hidden by default) -->
+<section id="emptyState" class="hidden px-6 pb-10">
+  <div class="bg-white dark:bg-[#1a242f] rounded-2xl border border-[#e5e7eb] dark:border-[#283039] p-10 shadow-sm">
+    <div class="flex flex-col items-center text-center">
+      <div class="w-48 h-40 rounded-2xl bg-[#f1f5f9] dark:bg-[#283039] border border-[#e5e7eb] dark:border-[#344150] flex items-center justify-center mb-6">
+        <span class="material-symbols-outlined text-primary text-5xl">add_circle</span>
+      </div>
+
+      <h2 class="text-2xl font-bold tracking-tight text-[#111418] dark:text-white">
+        Your feed is empty
+      </h2>
+      <p class="text-sm text-[#4b5563] dark:text-[#9dabb9] mt-2 max-w-[520px]">
+        Start your journey by following topics that interest you. We'll build a personalized news feed based on your choices.
+      </p>
+
+      <a href="../Explore/Explore.html"
+         class="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-white text-sm font-bold shadow-sm hover:brightness-110 transition">
+        <span class="material-symbols-outlined text-base">explore</span>
+        Explore Topics
+      </a>
+    </div>
+  </div>
+</section>
+
+<div id="feedList" class="flex flex-col gap-6 px-6">
 <div class="group bg-white dark:bg-[#1a242f] rounded-xl overflow-hidden shadow-sm border border-[#e5e7eb] dark:border-[#283039] flex flex-col sm:flex-row h-auto sm:h-48 cursor-pointer hover:border-primary transition-all">
 <div class="w-full sm:w-64 h-48 sm:h-full bg-center bg-cover shrink-0" data-alt="High tech laboratory with researchers" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCy7zC5jCV2tMFZTdEG6GNphzrfrLZyE1W8dKJfLEuCS-sil-2ULyokq5xNECYbWfBVGHAhGaMbi6VUS64NrAoVsG-tlbEb_lvNf8HSJwq39JkVHLekY38dcxG24c8ROY1VYoONE4Ilgws70df8TlRg6Msh1oX2YwNqpJ9LVKmEKd8X0Mbdi0-DxfwrviV0F8jm4trc40u5UeW9VhPM_o7XyPrYcMPaogdlFaxdRlpmCFc5TqcdDTRocXBAFDegTquzzi85Yazy");'></div>
 <div class="flex flex-col justify-between p-5 grow">
@@ -248,15 +296,43 @@
     <span class="block mt-2">© 2026 NewsRoom Inc.</span>
   </div>
 
-</aside>
+  </aside>
+
+  </div> <!-- /#pageContent -->
+
+<!-- LOADING OVERLAY -->
+<div id="loadingOverlay" class="hidden fixed inset-0 z-[999]">
+  <div class="absolute inset-0 bg-background-light/70 dark:bg-background-dark/70 backdrop-blur-sm"></div>
+
+  <div class="relative max-w-[1440px] mx-auto flex h-full">
+    <div class="hidden xl:block w-64"></div>
+
+    <div class="flex-1 min-w-0">
+      <div class="max-w-[800px] mx-auto pt-10 px-6 animate-pulse">
+        <h2 class="text-3xl font-bold tracking-tight text-[#111418] dark:text-white">
+          Loading your feed...
+        </h2>
+
+        <div class="mt-6 flex gap-3 overflow-x-auto no-scrollbar">
+          <div class="h-9 w-28 rounded-lg bg-[#e5e7eb] dark:bg-[#283039]"></div>
+          <div class="h-9 w-20 rounded-lg bg-[#e5e7eb] dark:bg-[#283039]"></div>
+          <div class="h-9 w-20 rounded-lg bg-[#e5e7eb] dark:bg-[#283039]"></div>
+          <div class="h-9 w-24 rounded-lg bg-[#e5e7eb] dark:bg-[#283039]"></div>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div class="h-44 rounded-2xl bg-[#e5e7eb] dark:bg-[#283039]"></div>
+          <div class="h-44 rounded-2xl bg-[#e5e7eb] dark:bg-[#283039]"></div>
+          <div class="h-44 rounded-2xl bg-[#e5e7eb] dark:bg-[#283039]"></div>
+          <div class="h-44 rounded-2xl bg-[#e5e7eb] dark:bg-[#283039]"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden lg:block w-full max-w-[340px]"></div>
+  </div>
 </div>
-</body></html>
-<style>
-aside::-webkit-scrollbar {
-  width: 6px;
-}
-aside::-webkit-scrollbar-thumb {
-  background: #137fec;
-  border-radius: 10px;
-}
-</style>
+
+<script src="Home.js"></script>
+</body>
+</html>
