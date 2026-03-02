@@ -63,7 +63,19 @@
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+    .sidebar-link {
+      @apply flex items-center gap-3 px-3 py-2.5 rounded-lg
+            text-sm font-medium
+            text-[#4b5563] dark:text-[#9dabb9]
+            hover:bg-gray-100 dark:hover:bg-[#283039]
+            transition-colors;
+    }
+
+    .sidebar-link.active {
+      @apply bg-primary/10 text-primary
+            dark:bg-[#283039] dark:text-white;
+    }
+</style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white min-h-screen">
@@ -100,37 +112,40 @@
 
   <div class="max-w-[1440px] mx-auto flex">
     <!-- SIDEBAR -->
-    <aside class="w-56 hidden lg:flex flex-col h-[calc(100vh-64px)] sticky top-16 p-4 gap-4 border-r border-[#d1d5db] dark:border-[#283039]">
-      <div class="flex flex-col gap-2">
-        <a href="../Home/Home.html" class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#283039] transition-colors cursor-pointer text-[#4b5563] dark:text-white">
-          <span class="material-symbols-outlined">rss_feed</span>
-          <p id="navFeedLabel" class="text-sm font-medium">Feed</p>
-        </a>
+    <aside class="w-64 hidden xl:flex flex-col h-[calc(100vh-64px)] sticky top-16 p-4 gap-2 border-r border-[#d1d5db] dark:border-[#283039] bg-white dark:bg-background-dark">
 
-        <a href="#" class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#283039] transition-colors cursor-pointer text-[#4b5563] dark:text-white">
-          <span class="material-symbols-outlined">explore</span>
-          <p id="navExploreLabel" class="text-sm font-medium">Explore</p>
-        </a>
+  <nav class="flex flex-col gap-1">
 
-        <a href="./BookmarkList.html" class="flex items-center gap-3 px-3 py-3 rounded-lg active-nav">
-          <span class="material-symbols-outlined">bookmark</span>
-          <p id="navBookmarksLabel" class="text-sm font-medium">Bookmarks</p>
-        </a>
+    <!-- Home -->
+    <a href="../Home/Home.html"
+       class="sidebar-link">
+      <span class="material-symbols-outlined">home</span>
+      <span>Home</span>
+    </a>
 
-        <a href="#" class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#283039] transition-colors cursor-pointer text-[#4b5563] dark:text-white">
-          <span class="material-symbols-outlined">settings</span>
-          <p id="navSettingsLabel" class="text-sm font-medium">Settings</p>
-        </a>
-      </div>
+    <!-- Explore -->
+    <a href="../Explore/Explore.html"
+       class="sidebar-link">
+      <span class="material-symbols-outlined">explore</span>
+      <span>Explore</span>
+    </a>
 
-      <div class="mt-auto p-4 bg-primary/10 rounded-xl border border-primary/20">
-        <p id="proPlanTitle" class="text-xs font-bold text-primary uppercase tracking-wider mb-2">Premium Plan</p>
-        <p id="proPlanText" class="text-xs text-[#4b5563] dark:text-[#9dabb9] mb-3">Unlock unlimited storage and offline reading mode.</p>
-        <button id="upgradeBtn" class="w-full py-2 bg-white dark:bg-[#283039] border border-[#d1d5db] dark:border-none text-[#111418] dark:text-white text-xs font-bold rounded-lg">
-          Upgrade
-        </button>
-      </div>
-    </aside>
+    <!-- Bookmarks -->
+    <a href="../Bookmark List/BookmarkList.html"
+       class="sidebar-link active">
+      <span class="material-symbols-outlined">bookmark</span>
+      <span>Bookmarks</span>
+    </a>
+
+    <!-- Settings -->
+    <a href="../Settings Page/Settings.html"
+       class="sidebar-link">
+      <span class="material-symbols-outlined">settings</span>
+      <span>Settings</span>
+    </a>
+
+  </nav>
+</aside>
 
     <!-- MAIN CONTENT -->
     <main class="flex-1 min-w-0 pb-10">
