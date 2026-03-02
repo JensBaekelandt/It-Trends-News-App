@@ -42,6 +42,18 @@
             background-color: #e5e7eb;
             color: #137fec;
         }
+        .sidebar-link {
+          @apply flex items-center gap-3 px-3 py-2.5 rounded-lg
+                text-sm font-medium
+                text-[#4b5563] dark:text-[#9dabb9]
+                hover:bg-gray-100 dark:hover:bg-[#283039]
+                transition-colors;
+        }
+
+        .sidebar-link.active {
+          @apply bg-primary/10 text-primary
+                dark:bg-[#283039] dark:text-white;
+        }
     </style>
 
     <style>
@@ -93,31 +105,42 @@ aside::-webkit-scrollbar-thumb {
 </div>
 </header>
 <div class="max-w-[1440px] mx-auto flex">
-<aside class="w-64 hidden xl:flex flex-col h-[calc(100vh-64px)] sticky top-16 p-4 gap-4 border-r border-[#d1d5db] dark:border-[#283039]">
-<div class="flex flex-col gap-2">
-<div class="flex items-center gap-3 px-3 py-3 rounded-lg active-nav">
-<span class="material-symbols-outlined">home</span>
-<p class="text-sm font-medium">Home</p>
-</div>
-<div class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-[#283039] transition-colors cursor-pointer text-[#4b5563] dark:text-white">
-<span class="material-symbols-outlined">explore</span>
-<p class="text-sm font-medium">Explore</p>
-</div>
-<div class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-[#283039] transition-colors cursor-pointer text-[#4b5563] dark:text-white">
-<span class="material-symbols-outlined">bookmark</span>
-<p class="text-sm font-medium">Bookmarks</p>
-</div>
-<div class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-[#283039] transition-colors cursor-pointer text-[#4b5563] dark:text-white">
-<span class="material-symbols-outlined">settings</span>
-<p class="text-sm font-medium">Settings</p>
-</div>
-</div>
-<div class="mt-auto p-4 bg-primary/10 rounded-xl border border-primary/20">
-<p class="text-xs font-bold text-primary uppercase tracking-wider mb-2">Pro Plan</p>
-<p class="text-xs text-[#4b5563] dark:text-[#9dabb9] mb-3">Get unlimited access to premium sources.</p>
-<button class="w-full py-2 bg-primary text-white text-xs font-bold rounded-lg">Upgrade Now</button>
-</div>
+<aside class="w-64 hidden xl:flex flex-col h-[calc(100vh-64px)] sticky top-16 p-4 gap-2 border-r border-[#d1d5db] dark:border-[#283039] bg-white dark:bg-background-dark">
+
+  <nav class="flex flex-col gap-1">
+
+    <!-- Home -->
+    <a href="../Home/Home.html"
+       class="sidebar-link active">
+      <span class="material-symbols-outlined">home</span>
+      <span>Home</span>
+    </a>
+
+    <!-- Explore -->
+    <a href="../Explore/Explore.html"
+       class="sidebar-link">
+      <span class="material-symbols-outlined">explore</span>
+      <span>Explore</span>
+    </a>
+
+    <!-- Bookmarks -->
+    <a href="../Bookmark List/BookmarkList.html"
+       class="sidebar-link">
+      <span class="material-symbols-outlined">bookmark</span>
+      <span>Bookmarks</span>
+    </a>
+
+    <!-- Settings -->
+    <a href="../Settings Page/Settings.html"
+       class="sidebar-link">
+      <span class="material-symbols-outlined">settings</span>
+      <span>Settings</span>
+    </a>
+
+  </nav>
 </aside>
+
+
 <main class="flex-1 min-w-0 pb-10">
 <div class="max-w-[800px] mx-auto">
 <div class="pt-8 px-6">
