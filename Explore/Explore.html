@@ -45,7 +45,18 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-    </style>
+        .sidebar-link {
+        @apply flex items-center gap-3 px-3 py-2.5 rounded-lg
+                text-sm font-medium
+                text-[#4b5563] dark:text-[#9dabb9]
+                hover:bg-gray-100 dark:hover:bg-[#283039]
+                transition-colors;
+        }
+        .sidebar-link.active {
+        @apply bg-primary/10 text-primary
+                dark:bg-[#283039] dark:text-white;
+        }
+</style>
 <header class="sticky top-0 z-50 w-full h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between">
 <div class="flex items-center gap-8">
 <div class="flex items-center gap-3">
@@ -71,28 +82,40 @@
 </div>
 </div>
 </header>
-<div class="flex h-[calc(100vh-64px)] overflow-hidden">
-<aside class="w-64 flex-shrink-0 border-r border-slate-200 flex flex-col bg-white">
-<div class="p-4">
-<nav class="space-y-1">
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="../Home/Home.html">
-<span class="material-symbols-outlined">home</span>
-<span class="text-sm font-medium">Home</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg active-nav transition-colors" href="Explore.html">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">explore</span>
-<span class="text-sm font-medium">Explore</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="../Bookmark List/BookmarkList.html">
-<span class="material-symbols-outlined">bookmarks</span>
-<span class="text-sm font-medium">Bookmarks</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors" href="../Settings Page/Settings.html">
-<span class="material-symbols-outlined">settings</span>
-<span class="text-sm font-medium">Settings</span>
-</a>
-</nav>
-</div>
+<div class="max-w-[1440px] mx-auto flex">
+<aside class="w-64 hidden xl:flex flex-col h-[calc(100vh-64px)] sticky top-16 p-4 gap-2 border-r border-[#d1d5db] dark:border-[#283039] bg-white dark:bg-background-dark">
+
+  <nav class="flex flex-col gap-1">
+
+    <!-- Home -->
+    <a href="../Home/Home.html"
+       class="sidebar-link">
+      <span class="material-symbols-outlined">home</span>
+      <span>Home</span>
+    </a>
+
+    <!-- Explore -->
+    <a href="../Explore/Explore.html"
+       class="sidebar-link active">
+      <span class="material-symbols-outlined">explore</span>
+      <span>Explore</span>
+    </a>
+
+    <!-- Bookmarks -->
+    <a href="../Bookmark List/BookmarkList.html"
+       class="sidebar-link">
+      <span class="material-symbols-outlined">bookmark</span>
+      <span>Bookmarks</span>
+    </a>
+
+    <!-- Settings -->
+    <a href="../Settings Page/Settings.html"
+       class="sidebar-link">
+      <span class="material-symbols-outlined">settings</span>
+      <span>Settings</span>
+    </a>
+
+  </nav>
 </aside>
 <main class="flex-1 overflow-y-auto no-scrollbar bg-[#f8fafc]">
 <div class="max-w-5xl mx-auto px-8 py-10">

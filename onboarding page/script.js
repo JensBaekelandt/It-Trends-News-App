@@ -153,7 +153,7 @@ function handleCreateAccount() {
     console.log('Navigating to Create Account page...');
     
     // Example: Uncomment to redirect to a sign-up page
-    // window.location.href = '/signup.html';
+    window.location.href = '../LoginPage/creatLogin.html';
     
     // Temporary feedback for demonstration
     showNotification('Redirecting to account creation...', 'info');

@@ -5,7 +5,7 @@ const STORAGE_KEYS = {
 
 const translations = {
   en: {
-    navFeed: "Feed",
+    navHome: "Home",
     navExplore: "Explore",
     navBookmarks: "Bookmarks",
     navSettings: "Settings",
@@ -32,7 +32,7 @@ const translations = {
     deleteAria: "Remove bookmark"
   },
   nl: {
-    navFeed: "Feed",
+    navHome: "Home",
     navExplore: "Verkennen",
     navBookmarks: "Bladwijzers",
     navSettings: "Instellingen",
@@ -217,7 +217,7 @@ const themeToggleBtn = document.getElementById("themeToggleBtn");
 const themeIconEl = document.getElementById("themeIcon");
 
 // labels
-const navFeedLabel = document.getElementById("navFeedLabel");
+const navHomeLabel = document.getElementById("navHomeLabel");
 const navExploreLabel = document.getElementById("navExploreLabel");
 const navBookmarksLabel = document.getElementById("navBookmarksLabel");
 const navSettingsLabel = document.getElementById("navSettingsLabel");
@@ -286,7 +286,7 @@ function applyTheme() {
 
 // ---------- Language ----------
 function applyTranslations() {
-  navFeedLabel.textContent = t("navFeed");
+  navHomeLabel.textContent = t("navHome");
   navExploreLabel.textContent = t("navExplore");
   navBookmarksLabel.textContent = t("navBookmarks");
   navSettingsLabel.textContent = t("navSettings");
