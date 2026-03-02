@@ -1,6 +1,7 @@
 /**
  * Content Extraction Service
  * Uses CORS proxy to fetch web pages and extracts readable content
+ * Browser-compatible version (no Node.js dependencies)
  */
 
 // CORS proxy options (free services)
@@ -13,10 +14,43 @@ interface ExtractedContent {
   title: string;
   content: string;
   excerpt: string;
+  htmlContent?: string; // Raw HTML for rendering
 }
 
 /**
- * Simple HTML to text conversion (without external dependencies)
+ * Extract main content from HTML using browser-compatible method
+ */
+function extractMainContent(html: string): string {
+  // Look for common main content containers
+  const selectors = [
+    /<article[^>]*>([\s\S]*?)<\/article>/i,
+    /<main[^>]*>([\s\S]*?)<\/main>/i,
+    /<div[^>]*class="[^"]*content[^"]*"[^>]*>([\s\S]*?)<\/div>/i,
+    /<div[^>]*class="[^"]*body[^"]*"[^>]*>([\s\S]*?)<\/div>/i,
+    /<div[^>]*class="[^"]*post[^"]*"[^>]*>([\s\S]*?)<\/div>/i,
+    /<div[^>]*id="[^"]*content[^"]*"[^>]*>([\s\S]*?)<\/div>/i,
+    /<div[^>]*id="[^"]*article[^"]*"[^>]*>([\s\S]*?)<\/div>/i,
+  ];
+
+  for (const selector of selectors) {
+    const match = html.match(selector);
+    if (match && match[1] && match[1].length > 200) {
+      return match[1];
+    }
+  }
+
+  // Fallback: remove header, nav, footer, sidebar
+  let content = html;
+  content = content.replace(/<header[^>]*>([\s\S]*?)<\/header>/gi, '');
+  content = content.replace(/<nav[^>]*>([\s\S]*?)<\/nav>/gi, '');
+  content = content.replace(/<footer[^>]*>([\s\S]*?)<\/footer>/gi, '');
+  content = content.replace(/<aside[^>]*>([\s\S]*?)<\/aside>/gi, '');
+  
+  return content;
+}
+
+/**
+ * Simple HTML to text conversion
  */
 function htmlToText(html: string): string {
   // Remove script and style tags
@@ -41,33 +75,10 @@ function htmlToText(html: string): string {
 }
 
 /**
- * Extract main content from HTML
+ * Fallback: extract main content from HTML (when primary fails)
  */
-function extractMainContent(html: string): string {
-  // Look for common main content containers
-  const selectors = [
-    /<article[^>]*>([\s\S]*?)<\/article>/i,
-    /<main[^>]*>([\s\S]*?)<\/main>/i,
-    /<div[^>]*class="[^"]*content[^"]*"[^>]*>([\s\S]*?)<\/div>/i,
-    /<div[^>]*class="[^"]*body[^"]*"[^>]*>([\s\S]*?)<\/div>/i,
-    /<div[^>]*class="[^"]*post[^"]*"[^>]*>([\s\S]*?)<\/div>/i,
-  ];
-
-  for (const selector of selectors) {
-    const match = html.match(selector);
-    if (match && match[1]) {
-      return match[1];
-    }
-  }
-
-  // Fallback: remove header, nav, footer, sidebar
-  let content = html;
-  content = content.replace(/<header[^>]*>([\s\S]*?)<\/header>/gi, '');
-  content = content.replace(/<nav[^>]*>([\s\S]*?)<\/nav>/gi, '');
-  content = content.replace(/<footer[^>]*>([\s\S]*?)<\/footer>/gi, '');
-  content = content.replace(/<aside[^>]*>([\s\S]*?)<\/aside>/gi, '');
-  
-  return content;
+function extractMainContentFallback(html: string): string {
+  return extractMainContent(html);
 }
 
 /**
@@ -112,8 +123,9 @@ export const fetchArticleContent = async (url: string): Promise<ExtractedContent
 
         return {
           title,
-          content: content.substring(0, 3000), // Limit content to 3000 chars for API
-          excerpt
+          content: content.substring(0, 5000), // Limit content
+          excerpt,
+          htmlContent: mainContent.substring(0, 15000) // Clean HTML for rendering
         };
       } catch (error) {
         console.warn(`Error with proxy ${proxyUrl}:`, error);

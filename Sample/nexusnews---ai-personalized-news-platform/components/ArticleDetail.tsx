@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext';
 import { ArrowLeft, BookmarkCheck, Bookmark, ExternalLink, Loader, AlertCircle } from 'lucide-react';
 import { generateArticleSummary } from '../services/geminiService';
 import { fetchArticleContent } from '../services/contentExtractor';
+import { createSafeHtml } from '../services/htmlSanitizer';
 
 interface ArticleDetailProps {
   article: Article;
@@ -15,6 +16,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack }) => {
   const [summary, setSummary] = useState<string>('');
   const [isLoadingSummary, setIsLoadingSummary] = useState(true);
   const [articleContent, setArticleContent] = useState<string>('');
+  const [articleHtmlContent, setArticleHtmlContent] = useState<string>('');
   const [isLoadingContent, setIsLoadingContent] = useState(true);
   const [contentError, setContentError] = useState(false);
   const isBookmarked = user?.bookmarks.some(b => b.id === article.id);
@@ -32,6 +34,10 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack }) => {
         if (extracted?.content) {
           contentToUse = extracted.content;
           setArticleContent(extracted.content);
+          // Store HTML content for rich rendering
+          if (extracted.htmlContent) {
+            setArticleHtmlContent(extracted.htmlContent);
+          }
         } else {
           setArticleContent(article.summary);
           setContentError(true);
@@ -163,11 +169,23 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ article, onBack }) => {
             </div>
           ) : null}
 
-          <div className="prose dark:prose-invert max-w-none mt-4">
-            <p className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
-              {articleContent}
-            </p>
-          </div>
+          {/* Render rich HTML content if available, otherwise plain text */}
+          {articleHtmlContent ? (
+            <div 
+              className="prose dark:prose-invert max-w-none mt-4 
+                prose-img:max-w-full prose-img:h-auto prose-img:rounded-lg
+                prose-a:text-primary-600 dark:prose-a:text-primary-400
+                prose-code:bg-slate-100 dark:prose-code:bg-slate-800
+                prose-pre:bg-slate-900 dark:prose-pre:bg-slate-950"
+              dangerouslySetInnerHTML={createSafeHtml(articleHtmlContent)}
+            />
+          ) : (
+            <div className="prose dark:prose-invert max-w-none mt-4">
+              <p className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
+                {articleContent}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Meta Info */}
