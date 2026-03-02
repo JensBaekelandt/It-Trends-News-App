@@ -42,17 +42,28 @@
             background-color: #e5e7eb;
             color: #137fec;
         }
-        .sidebar-link {
-          @apply flex items-center gap-3 px-3 py-2.5 rounded-lg
-                text-sm font-medium
-                text-[#4b5563] dark:text-[#9dabb9]
-                hover:bg-gray-100 dark:hover:bg-[#283039]
-                transition-colors;
+        .sidebar-link{
+          display:flex;
+          align-items:center;
+          gap:0.75rem;
+          padding:0.625rem 0.75rem;
+          border-radius:0.5rem;
+          font-size:0.875rem;
+          font-weight:500;
+          color:#4b5563;
+          transition: background-color .2s, color .2s;
         }
+        .dark .sidebar-link{ color:#9dabb9; }
+        .sidebar-link:hover{ background:#f3f4f6; }
+        .dark .sidebar-link:hover{ background:#283039; }
 
-        .sidebar-link.active {
-          @apply bg-primary/10 text-primary
-                dark:bg-[#283039] dark:text-white;
+        .sidebar-link.active{
+          background: rgba(19,127,236,.10);
+          color:#137fec;
+        }
+        .dark .sidebar-link.active{
+          background:#283039;
+          color:#ffffff;
         }
     </style>
 
@@ -322,6 +333,7 @@ aside::-webkit-scrollbar-thumb {
   </aside>
 
   </div> <!-- /#pageContent -->
+  </div>
 
 <!-- LOADING OVERLAY -->
 <div id="loadingOverlay" class="hidden fixed inset-0 z-[999]">
