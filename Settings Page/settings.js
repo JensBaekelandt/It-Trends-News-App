@@ -1,21 +1,12 @@
-//this lets you hide the toolbar
-let toolbarHidden = false;
+// Settings page UI states (loading + empty)
+// Test:
+//   Settings.html?state=loading
+//   Settings.html?state=empty
+//   Settings.html?state=content
 
-function toggleToolbar() {
-  const toolbar = document.getElementById("floatingToolbar");
-
-  if (!toolbarHidden) {
-    toolbar.style.bottom = "-60px"; // duwt hem tegen onderrand
-    toolbarHidden = true;
-  } else {
-    toolbar.style.bottom = "32px"; // originele bottom-8 (8 = 2rem = 32px)
-    toolbarHidden = false;
-  }
-}
-
-// UI states: loading + empty
 document.addEventListener("DOMContentLoaded", () => {
   const pageContent = document.getElementById("pageContent");
+  const settingsContent = document.getElementById("settingsContent");
   const loadingOverlay = document.getElementById("loadingOverlay");
   const emptyState = document.getElementById("emptyState");
 
@@ -30,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showEmpty(isEmpty) {
     if (emptyState) emptyState.classList.toggle("hidden", !isEmpty);
     if (pageContent) pageContent.classList.toggle("hidden", isEmpty);
+    if (settingsContent) settingsContent.classList.toggle("hidden", isEmpty);
   }
 
   function setView(view) {
@@ -38,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
       showLoading(true);
       return;
     }
-
     showLoading(false);
     showEmpty(view === "empty");
   }
@@ -48,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Default: short loading -> content
+  // default: short loading -> content
   setView("loading");
   window.setTimeout(() => setView("content"), 700);
 });

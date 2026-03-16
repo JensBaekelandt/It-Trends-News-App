@@ -1,23 +1,14 @@
-//this lets you hide the toolbar
-let toolbarHidden = false;
+// Home page UI states (loading + empty)
+// Test:
+//   Home.html?state=loading
+//   Home.html?state=empty
+//   Home.html?state=content
 
-function toggleToolbar() {
-  const toolbar = document.getElementById("floatingToolbar");
-
-  if (!toolbarHidden) {
-    toolbar.style.bottom = "-60px"; // duwt hem tegen onderrand
-    toolbarHidden = true;
-  } else {
-    toolbar.style.bottom = "32px"; // originele bottom-8 (8 = 2rem = 32px)
-    toolbarHidden = false;
-  }
-}
-
-// UI states: loading + empty
 document.addEventListener("DOMContentLoaded", () => {
-  const pageContent = document.getElementById("pageContent");
   const loadingOverlay = document.getElementById("loadingOverlay");
   const emptyState = document.getElementById("emptyState");
+  const feedFilters = document.getElementById("feedFilters");
+  const feedList = document.getElementById("feedList");
 
   const params = new URLSearchParams(window.location.search);
   const forcedState = (params.get("state") || "").toLowerCase();
@@ -29,7 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showEmpty(isEmpty) {
     if (emptyState) emptyState.classList.toggle("hidden", !isEmpty);
-    if (pageContent) pageContent.classList.toggle("hidden", isEmpty);
+    if (feedFilters) feedFilters.classList.toggle("hidden", isEmpty);
+    if (feedList) feedList.classList.toggle("hidden", isEmpty);
   }
 
   function setView(view) {
@@ -38,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
       showLoading(true);
       return;
     }
-
     showLoading(false);
     showEmpty(view === "empty");
   }
@@ -48,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Default: short loading -> content
   setView("loading");
-  window.setTimeout(() => setView("content"), 700);
+  window.setTimeout(() => setView("content"), 900);
 });
