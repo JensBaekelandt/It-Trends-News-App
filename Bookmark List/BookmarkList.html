@@ -112,40 +112,7 @@
 
   <div class="max-w-[1440px] mx-auto flex">
     <!-- SIDEBAR -->
-    <aside class="w-64 hidden xl:flex flex-col h-[calc(100vh-64px)] sticky top-16 p-4 gap-2 border-r border-[#d1d5db] dark:border-[#283039] bg-white dark:bg-background-dark">
-
-  <nav class="flex flex-col gap-1">
-
-    <!-- Home -->
-    <a href="../Home/Home.html"
-       class="sidebar-link">
-      <span class="material-symbols-outlined">home</span>
-      <span>Home</span>
-    </a>
-
-    <!-- Explore -->
-    <a href="../Explore/Explore.html"
-       class="sidebar-link">
-      <span class="material-symbols-outlined">explore</span>
-      <span>Explore</span>
-    </a>
-
-    <!-- Bookmarks -->
-    <a href="../Bookmark List/BookmarkList.html"
-       class="sidebar-link active">
-      <span class="material-symbols-outlined">bookmark</span>
-      <span>Bookmarks</span>
-    </a>
-
-    <!-- Settings -->
-    <a href="../Settings Page/Settings.html"
-       class="sidebar-link">
-      <span class="material-symbols-outlined">settings</span>
-      <span>Settings</span>
-    </a>
-
-  </nav>
-</aside>
+   <div id="sidebarContainer"></div>
 
     <!-- MAIN CONTENT -->
     <main class="flex-1 min-w-0 pb-10">
@@ -191,5 +158,6 @@
   </div>
 
   <script src="BookmarkList.js"></script>
+  <script src="../Components/Sidebar/Sidebar.js" type="module"></script>
 </body>
 </html>

@@ -1,330 +1,298 @@
-<html lang="en"><head></head><body class="bg-background-light text-slate-900 min-h-screen">
+<!DOCTYPE html>
+<html lang="en" class="bg-background-light dark:bg-background-dark">
 
-
-
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Explore Topics &amp; Sources - NewsHub</title>
+
+<title>Explore Topics & Sources - NewsHub</title>
+
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#137fec",
-                        "background-light": "#f6f7f8",
-                        "background-dark": "#101922",
-                    },
-                    fontFamily: {
-                        "display": ["Work Sans"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
+tailwind.config = {
+darkMode: "class",
+theme: {
+extend: {
+colors: {
+"primary": "#137fec",
+"background-light": "#f6f7f8",
+"background-dark": "#101922",
+},
+fontFamily: {
+"display": ["Work Sans"]
+},
+borderRadius: {
+"DEFAULT": "0.25rem",
+"lg": "0.5rem",
+"xl": "0.75rem",
+"full": "9999px"
+},
+},
+},
+}
+</script>
+
 <style type="text/tailwindcss">
-        body {
-            font-family: "Work Sans", sans-serif;
-        }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .active-nav {
-            background-color: rgba(19, 127, 236, 0.1);
-            color: #137fec;
-            border-right: 3px solid #137fec;
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .sidebar-link {
-        @apply flex items-center gap-3 px-3 py-2.5 rounded-lg
-                text-sm font-medium
-                text-[#4b5563] dark:text-[#9dabb9]
-                hover:bg-gray-100 dark:hover:bg-[#283039]
-                transition-colors;
-        }
-        .sidebar-link.active {
-        @apply bg-primary/10 text-primary
-                dark:bg-[#283039] dark:text-white;
-        }
+body {
+font-family: "Work Sans", sans-serif;
+}
+
+.material-symbols-outlined {
+font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+}
+
+.active-nav {
+background-color: rgba(19,127,236,0.1);
+color:#137fec;
+border-right:3px solid #137fec;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+display:none;
+}
+
+.no-scrollbar {
+-ms-overflow-style:none;
+scrollbar-width:none;
+}
+
+.sidebar-link {
+display:flex;
+align-items:center;
+gap:0.75rem;
+padding:0.75rem;
+border-radius:0.5rem;
+font-size:0.875rem;
+font-weight:500;
+color:#4b5563;
+transition:background-color .3s,color .3s;
+}
+
+.dark .sidebar-link {
+color:#9dabb9;
+}
+
+.sidebar-link:hover {
+background-color:#f3f4f6;
+}
+
+.dark .sidebar-link:hover {
+background-color:#283039;
+}
+
+.sidebar-link.active {
+background-color:rgba(19,127,236,0.1);
+color:#137fec;
+}
+
+.dark .sidebar-link.active {
+background-color:#283039;
+color:white;
+}
 </style>
-<header class="sticky top-0 z-50 w-full h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between">
-<div class="flex items-center gap-8">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
-<span class="material-symbols-outlined text-xl">rocket_launch</span>
-</div>
-<h1 class="text-lg font-bold leading-none tracking-tight">NewsRoom</h1>
-</div>
 
-</div>
-<div class="flex items-center gap-4">
-<div class="flex items-center bg-slate-100 rounded-full p-1">
-<button class="px-3 py-1 text-xs font-bold rounded-full bg-white shadow-sm">EN</button>
-<button class="px-3 py-1 text-xs font-bold text-slate-500">NL</button>
-</div>
-<button class="w-10 h-10 flex items-center justify-center rounded-full text-slate-600 hover:bg-slate-100 transition-colors">
-<span class="material-symbols-outlined">light_mode</span>
-</button>
-<div class="flex items-center gap-3 pl-4 border-l border-slate-200">
-<div class="w-8 h-8 rounded-full bg-slate-300 ring-2 ring-white" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDp6s0gRbYvhW7zCCS8Jdk72mLPh6d4wtyUhZC67Y3DDzFR4ntG0XtiK2USR_kDuBXajPDIDL5edfQxHf7j9LyA-5ZREitqfkgYpz5G_kbtH9Rwite37Nw-0RQhp4ItMPjU_xo_XqE00e1x4Dv-oROjquHSfQGXZEm0ccOiIY9bAjGMIfWc6f0OxblTJwp5eYZnAFuTAGyCFeTuRNP3S6Xlp5CNDqBaj_mv2FlVwxfeX_H-uXui0zkP7mtsktYXBVw8vyu3fZVo'); background-size: cover;"></div>
-<span class="text-sm font-semibold hidden lg:block text-slate-700">Alex Rivera</span>
-<span class="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
-</div>
-</div>
-</header>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-200 min-h-screen">
+
+<div id="header"></div>
+
 <div class="max-w-[1440px] mx-auto flex">
-<aside class="w-64 hidden xl:flex flex-col h-[calc(100vh-64px)] sticky top-16 p-4 gap-2 border-r border-[#d1d5db] dark:border-[#283039] bg-white dark:bg-background-dark">
 
-  <nav class="flex flex-col gap-1">
+<!-- SIDEBAR -->
+<div id="sidebarContainer"></div>
 
-    <!-- Home -->
-    <a href="../Home/Home.html"
-       class="sidebar-link">
-      <span class="material-symbols-outlined">home</span>
-      <span>Home</span>
-    </a>
+<!-- MAIN -->
+<main class="flex-1 overflow-y-auto no-scrollbar bg-background-light dark:bg-background-dark">
 
-    <!-- Explore -->
-    <a href="../Explore/Explore.html"
-       class="sidebar-link active">
-      <span class="material-symbols-outlined">explore</span>
-      <span>Explore</span>
-    </a>
-
-    <!-- Bookmarks -->
-    <a href="../Bookmark List/BookmarkList.html"
-       class="sidebar-link">
-      <span class="material-symbols-outlined">bookmark</span>
-      <span>Bookmarks</span>
-    </a>
-
-    <!-- Settings -->
-    <a href="../Settings Page/Settings.html"
-       class="sidebar-link">
-      <span class="material-symbols-outlined">settings</span>
-      <span>Settings</span>
-    </a>
-
-  </nav>
-</aside>
-<main class="flex-1 overflow-y-auto no-scrollbar bg-[#f8fafc]">
 <div class="max-w-5xl mx-auto px-8 py-10">
+
 <header class="mb-10">
 <h1 class="text-3xl font-bold mb-2">Explore Topics</h1>
-<p class="text-slate-500 mb-6">Discover new interests and trusted global news sources.</p>
+<p class="text-slate-500 dark:text-slate-400 mb-6">
+Discover new interests and trusted global news sources.
+</p>
+
 <div class="relative group">
+
 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-<span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+<span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">
+search
+</span>
 </div>
-<input class="block w-full pl-12 pr-4 py-4 bg-white border-none rounded-2xl ring-1 ring-slate-200 focus:ring-2 focus:ring-primary shadow-sm text-base placeholder:text-slate-400 transition-all outline-none" placeholder="Search Topics, Tags, or Sources..." type="text"/>
+
+<input
+class="block w-full pl-12 pr-4 py-4 bg-white dark:bg-[#1b2631] border-none rounded-2xl ring-1 ring-slate-200 dark:ring-[#283039] focus:ring-2 focus:ring-primary shadow-sm text-base placeholder:text-slate-400 transition-all outline-none"
+placeholder="Search Topics, Tags, or Sources..."
+type="text"
+/>
+
 <div class="absolute inset-y-0 right-4 flex items-center gap-2">
-<span class="px-2 py-1 text-[10px] font-bold text-slate-400 bg-slate-100 rounded border border-slate-200 uppercase tracking-tighter">Enter</span>
+<span class="px-2 py-1 text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-[#283039] rounded border border-slate-200 dark:border-[#283039] uppercase tracking-tighter">
+Enter
+</span>
 </div>
+
 </div>
 </header>
+
 <div class="flex items-center justify-between mb-6">
 <h2 class="text-xl font-bold tracking-tight">Trending Topics</h2>
 <button class="text-primary text-sm font-semibold hover:underline">View All</button>
 </div>
+
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-<div class="group relative overflow-hidden bg-white rounded-xl border border-slate-200 hover:border-primary transition-all p-4 shadow-sm">
-<div class="w-full aspect-[16/10] rounded-lg mb-4 bg-slate-100 overflow-hidden relative">
+
+<!-- Technology Card -->
+<div class="group relative overflow-hidden bg-white dark:bg-[#1b2631] rounded-xl border border-slate-200 dark:border-[#283039] hover:border-primary transition-all p-4 shadow-sm">
+<div class="w-full aspect-[16/10] rounded-lg mb-4 bg-slate-100 dark:bg-slate-700 overflow-hidden relative">
 <div class="absolute inset-0 bg-cover bg-center" data-alt="Microchip and circuit board close up" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUD-aOOxEw5nrnRH2K7etzN7SOHPZbuPoMbtcJQItrX35Z57WQXIbjMNMZxeCHF042-4Z3mLV2ZQDu-TQHJilUqiCOzAU3_hCokQDGMS6qMcELLb308UIZqktZluuhaFieqOG6lFyDReeXZ8TE73pGn2So0QCYW7Yux91BUIjkDLa7SeK4XWLiN96ipISIg61ZAYkXjFw1CMTERte5y-d8M4k2HED3YBsH3rVO0EsBE5rtIm5EuOq6kQLyJ-ElRA-KYYcxZIA0');"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 </div>
 <div class="flex flex-col h-full">
 <h3 class="font-bold text-lg mb-1">Technology</h3>
-<p class="text-slate-500 text-sm mb-4 line-clamp-2">AI, gadgets, and the future of innovation.</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-2">AI, gadgets, and the future of innovation.</p>
 <button class="mt-auto w-full py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/90 transition-colors">Follow</button>
 </div>
 </div>
-<div class="group relative overflow-hidden bg-white rounded-xl border border-slate-200 hover:border-primary transition-all p-4 shadow-sm">
-<div class="w-full aspect-[16/10] rounded-lg mb-4 bg-slate-100 overflow-hidden relative">
+
+<!-- Science Card -->
+<div class="group relative overflow-hidden bg-white dark:bg-[#1b2631] rounded-xl border border-slate-200 dark:border-[#283039] hover:border-primary transition-all p-4 shadow-sm">
+<div class="w-full aspect-[16/10] rounded-lg mb-4 bg-slate-100 dark:bg-slate-700 overflow-hidden relative">
 <div class="absolute inset-0 bg-cover bg-center" data-alt="Galaxies and deep space nebula" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBpd5QR0wHwoAfX0aDy6Q9C0slHAX_-HB-7zwusk1m-yw4H30mK8vI6lTQaXqOlRcAOKeImwe82apirsZ9cvLwoaAMmzD-SdLCwLQ0bq7zlkbDi1CnXPjhj6T2G6i2oqX4Dq5fn-Q0xUoB8zPuH3HirIVaR9ilY-HTQPZlodkFFXuwetW8GVLZ19G3rW7SYJEWunHKTS1mlSLLc9wywD9KZkmVFZoRY42w2ZPyepeIVpr6XGTE9nt9C174kvbvCR_0nG5eKFx0G');"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 </div>
 <div class="flex flex-col h-full">
 <h3 class="font-bold text-lg mb-1">Science</h3>
-<p class="text-slate-500 text-sm mb-4 line-clamp-2">Exploring space, biology, and the universe.</p>
-<button class="mt-auto w-full py-2 bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg hover:bg-slate-200 transition-colors">Follow</button>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-2">Exploring space, biology, and the universe.</p>
+<button class="mt-auto w-full py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-semibold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Follow</button>
 </div>
 </div>
-<div class="group relative overflow-hidden bg-white rounded-xl border border-slate-200 hover:border-primary transition-all p-4 shadow-sm">
-<div class="w-full aspect-[16/10] rounded-lg mb-4 bg-slate-100 overflow-hidden relative">
-<div class="absolute inset-0 bg-cover bg-center" data-alt="Capitol building architectural view" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBHiX6ZsQGL3MHlnYNo9mthJTFvRYOZPWSR6lB5-73aDMbkQKeuWSXMPdQZhnhCs2vpAV2h5crPYaSxukMccsV5H6DOFptMNH82GqoUawJp3ospbq641mgWWGxPuFhyoUd0llybYne1hadRItSgx2vBceSAWE8Amr-Vqcrt5rjIOhHRpxiZlMcQ1baD1K4_tIeojQLKk0FtaA1u2j7OAa0hVrczOUIX2-QJEar7lZCahzG74-zLp-CyO1oeFhvZMeQGofLzvyb5');"></div>
+
+<!-- Politics Card -->
+<div class="group relative overflow-hidden bg-white dark:bg-[#1b2631] rounded-xl border border-slate-200 dark:border-[#283039] hover:border-primary transition-all p-4 shadow-sm">
+<div class="w-full aspect-[16/10] rounded-lg mb-4 bg-slate-100 dark:bg-slate-700 overflow-hidden relative">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Capitol building architectural view" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBHiX6ZsQGL3MHlnYNo9mthJTFvRYOZPWSR6lB5-73aDMbkQKeuWSXMPdQZhnhCs2vpAV2h5crPYaSxukMccsV5H6DOFptMNH82GqoUawJp3ospb641mgWWGxPuFhyoUd0llybYne1hadRItSgx2vBceSAWE8Amr-Vqcrt5rjIOhHRpxiZlMcQ1baD1K4_tIeojQLKk0FtaA1u2j7OAa0hVrczOUIX2-QJEar7lZCahzG74-zLp-CyO1oeFhvZMeQGofLzvyb5');"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 </div>
 <div class="flex flex-col h-full">
 <h3 class="font-bold text-lg mb-1">Politics</h3>
-<p class="text-slate-500 text-sm mb-4 line-clamp-2">Global affairs and local governance news.</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-2">Global affairs and local governance news.</p>
 <button class="mt-auto w-full py-2 bg-primary/10 text-primary text-sm font-bold rounded-lg border border-primary/20 flex items-center justify-center gap-1">
 <span class="material-symbols-outlined text-sm">check</span> Following
-                            </button>
+</button>
 </div>
 </div>
-<div class="group relative overflow-hidden bg-white rounded-xl border border-slate-200 hover:border-primary transition-all p-4 shadow-sm">
-<div class="w-full aspect-[16/10] rounded-lg mb-4 bg-slate-100 overflow-hidden relative">
+
+<!-- Design Card -->
+<div class="group relative overflow-hidden bg-white dark:bg-[#1b2631] rounded-xl border border-slate-200 dark:border-[#283039] hover:border-primary transition-all p-4 shadow-sm">
+<div class="w-full aspect-[16/10] rounded-lg mb-4 bg-slate-100 dark:bg-slate-700 overflow-hidden relative">
 <div class="absolute inset-0 bg-cover bg-center" data-alt="Modern abstract minimalist design pattern" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCyvq99LcSxlJ5O1V3_8wlpu1467zHndt0vm7JXMIx23d-zdWUBHrEr0YosjUUP8zUmUY_HD0jZRSRmyd4_-Z7DhqsoKeUPKGHCDzB4N7o9qFGHwlRNLFMM_vKT5RI_grQtiS4lzwmVnvyaBPFseEM2kYS5c9rZU5a9Pj3JZw9mFc3miR7XVL9hQ4o-j3fCXLQoS58PIuQrYBdO5uop-g3LcnP1jVOMRUgTB2gMkvBwIpSXeNNsg-DKvf1TetuX6u1HApeeObbL');"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 </div>
 <div class="flex flex-col h-full">
 <h3 class="font-bold text-lg mb-1">Design</h3>
-<p class="text-slate-500 text-sm mb-4 line-clamp-2">UI/UX, Architecture, and Fine Arts.</p>
-<button class="mt-auto w-full py-2 bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg hover:bg-slate-200 transition-colors">Follow</button>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-2">UI/UX, Architecture, and Fine Arts.</p>
+<button class="mt-auto w-full py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-semibold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Follow</button>
 </div>
 </div>
+
 </div>
+
+<!-- TRUSTED SOURCES -->
 <div class="flex items-center justify-between mb-6">
 <div class="flex items-center gap-3">
 <h2 class="text-xl font-bold tracking-tight">Trusted Sources</h2>
 <span class="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded uppercase tracking-wider">Verified</span>
 </div>
-<div class="flex items-center gap-2">
-<div class="absolute left-4 top-0.5 w-3 h-3 bg-primary rounded-full"></div>
 </div>
-</div>
-<div class="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100 overflow-hidden shadow-sm">
-<div class="p-6 flex items-center justify-between hover:bg-slate-50 transition-colors">
+
+<div class="bg-white dark:bg-[#1b2631] rounded-xl border border-slate-200 dark:border-[#283039] divide-y divide-slate-100 dark:divide-[#283039] overflow-hidden shadow-sm">
+
+<!-- BBC News -->
+<div class="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-[#1b2631] transition-colors">
 <div class="flex items-center gap-4">
 <div class="w-12 h-12 bg-black flex items-center justify-center rounded-lg text-white font-bold text-sm" data-alt="BBC News logo block" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnVStxos5boEpVrxy4f4RmWr85fdqIYU_TefJ4PUMbtOjEWMq9Jue8QGurTuU4AtiBJafYq3rNPzCMeBN9WD9n3P88YznmtqDWGzKCB65_LekBDlr9hf4BkP3ttDa1Wg0C285UuhWz6HAd0q2GLshLk0kobxtQKFsiRAU_grbkYoZeSeCeOomN9y7sN5sgzwgkKO8XE7RwMu1tFUsA0BkBKxoy79EtMDnmZPx7XmIdB6aOLtBUO-C7VH8N_4be560hDK9ngbk9'); background-size: cover;">B</div>
 <div>
 <h4 class="font-bold text-base">BBC News</h4>
-<p class="text-slate-500 text-sm">International breaking news and analysis.</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">International breaking news and analysis.</p>
 </div>
 </div>
 <div class="flex items-center gap-6">
 <div class="hidden md:flex flex-col items-end">
-<span class="text-[10px] font-bold text-slate-400 uppercase">Reliability</span>
+<span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase">Reliability</span>
 <div class="flex gap-0.5">
 <div class="w-3 h-1 bg-primary rounded-full"></div>
 <div class="w-3 h-1 bg-primary rounded-full"></div>
 <div class="w-3 h-1 bg-primary rounded-full"></div>
-<div class="w-3 h-1 bg-slate-200 rounded-full"></div>
+<div class="w-3 h-1 bg-slate-200 dark:bg-slate-600 rounded-full"></div>
 </div>
 </div>
 <label class="relative inline-flex items-center cursor-pointer">
-<input checked="" class="sr-only peer" type="checkbox"/>
-<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<input checked class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 dark:bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
 </label>
 </div>
 </div>
-<div class="p-6 flex items-center justify-between hover:bg-slate-50 transition-colors">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 bg-slate-100 flex items-center justify-center rounded-lg text-slate-800 font-bold text-xs" data-alt="Reuters news logo symbol" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCylCQM-mnD70_8HNdCNc8WZ8regqgivDqr4426zWpvnt8KnqQ-IOtVdIJ1AoByUHkUAAQ-d6FwGPKNpMs4nXLbfIUVDCJjr1vU434BrQbwz_qQJyBmirzqn3igFODnWSFaqaNWll9ApuxiKVJsC0_ncI7j_HCicjpMDikc5r-Eru-X4QkD-vAew2jL-2MhK8oPUNntV25dGbBULvIxtoUGIpnvR85kHct6zhmoKFaWYbvNyX30yUYnHwEQX7w4qd_ak7akX28e'); background-size: cover;">R</div>
-<div>
-<h4 class="font-bold text-base">Reuters</h4>
-<p class="text-slate-500 text-sm">Unbiased world news from a global agency.</p>
-</div>
-</div>
-<div class="flex items-center gap-6">
-<div class="hidden md:flex flex-col items-end">
-<span class="text-[10px] font-bold text-slate-400 uppercase">Reliability</span>
-<div class="flex gap-0.5">
-<div class="w-3 h-1 bg-primary rounded-full"></div>
-<div class="w-3 h-1 bg-primary rounded-full"></div>
-<div class="w-3 h-1 bg-primary rounded-full"></div>
-<div class="w-3 h-1 bg-primary rounded-full"></div>
-</div>
-</div>
-<label class="relative inline-flex items-center cursor-pointer">
-<input checked="" class="sr-only peer" type="checkbox"/>
-<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-</label>
-</div>
-</div>
-<div class="p-6 flex items-center justify-between hover:bg-slate-50 transition-colors">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 bg-pink-600 flex items-center justify-center rounded-lg text-white font-bold text-xs" data-alt="The Verge logo typography" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCGbn4PyKVboOUjFPUJw-M_D-iENUcEfgWbzTLN4GA20WFrEs3MF4Qh8LszTG4xwB_aPf2acuGuCAvIkPqP3ZtqYtJciphIlC7TAEsk90yxRyqdE5LKd3mhRKg5os-xPHp2iChxRt0FvMijFVTzYf2cvF6m872-L90V59A-S4WoqPI5rKcnV1XVELWHTiCFhE-hYEF9Ey0atFaKW6gtFl32DPcw7ng_5yRIWL5KGlY0oJMjoLeBe4-B2wwB0QJ1o47UZ7n9EiER'); background-size: cover;">V</div>
-<div>
-<h4 class="font-bold text-base">The Verge</h4>
-<p class="text-slate-500 text-sm">Tech, science, and the intersection of culture.</p>
-</div>
-</div>
-<div class="flex items-center gap-6">
-<div class="hidden md:flex flex-col items-end">
-<span class="text-[10px] font-bold text-slate-400 uppercase">Reliability</span>
-<div class="flex gap-0.5">
-<div class="w-3 h-1 bg-primary rounded-full"></div>
-<div class="w-3 h-1 bg-primary rounded-full"></div>
-<div class="w-3 h-1 bg-slate-200 rounded-full"></div>
-<div class="w-3 h-1 bg-slate-200 rounded-full"></div>
-</div>
-</div>
-<label class="relative inline-flex items-center cursor-pointer">
-<input class="sr-only peer" type="checkbox"/>
-<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-</label>
-</div>
-</div>
-<div class="p-6 flex items-center justify-between hover:bg-slate-50 transition-colors">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 bg-yellow-400 flex items-center justify-center rounded-lg text-black font-bold text-lg" data-alt="National Geographic yellow frame logo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDfcxaKqBHys3H5nQwkc8bE4SCrG9y1EVZygrGGvZwlY9JcdZQCwUydzy4uGbs9NGwY33EP1uaTbhu9mtMepmLmKPXJPvXlw4WH8C8VWTrMS1Qy7AI9clecqSq0naxozhFG5bKmURyZf2_TlFq0I3aHFY_GkQbZ72nSpU2SvQt952kjvD9S3lEqbX4d2iWi2zanVLgUAMnAWhromVEjbcDbDOfv9MF5_PHK0AMyrBrgdmaJJakRZEWGGZd6hJWa3rJb7WPRhWGb'); background-size: cover;">N</div>
-<div>
-<h4 class="font-bold text-base">National Geographic</h4>
-<p class="text-slate-500 text-sm">Science, exploration, and photography.</p>
-</div>
-</div>
-<div class="flex items-center gap-6">
-<div class="hidden md:flex flex-col items-end">
-<span class="text-[10px] font-bold text-slate-400 uppercase">Reliability</span>
-<div class="flex gap-0.5">
-<div class="w-3 h-1 bg-primary rounded-full"></div>
-<div class="w-3 h-1 bg-primary rounded-full"></div>
-<div class="w-3 h-1 bg-primary rounded-full"></div>
-<div class="w-3 h-1 bg-primary rounded-full"></div>
-</div>
-</div>
-<label class="relative inline-flex items-center cursor-pointer">
-<input checked="" class="sr-only peer" type="checkbox"/>
-<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-</label>
-</div>
-</div>
-</div>
-<div class="mt-8 flex justify-center">
-<button class="px-6 py-3 bg-white border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors flex items-center gap-2 shadow-sm">
-<span class="material-symbols-outlined text-sm">refresh</span>
-                        Load More Sources
-                    </button>
-</div>
+
 </div>
 </main>
-<aside class="w-80 hidden xl:flex flex-col border-l border-slate-200 bg-white p-6 overflow-y-auto no-scrollbar">
+
+<!-- RIGHT SIDEBAR -->
+<aside class="w-80 hidden xl:flex flex-col border-l border-slate-200 dark:border-[#283039] bg-white dark:bg-background-dark p-6 overflow-y-auto no-scrollbar">
+
 <h3 class="font-bold text-lg mb-6">Live Trends</h3>
+
 <div class="space-y-6">
+
 <div class="flex flex-col gap-1">
 <span class="text-primary text-[10px] font-bold uppercase tracking-widest">Global • Live</span>
-<p class="text-sm font-semibold leading-snug">Major tech breakthrough in quantum computing reported.</p>
+<p class="text-sm font-semibold leading-snug">
+Major tech breakthrough in quantum computing reported.
+</p>
 <p class="text-slate-400 text-xs mt-1">12m ago • 4.2k reading</p>
 </div>
+
 <div class="flex flex-col gap-1">
 <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Politics</span>
-<p class="text-sm font-semibold leading-snug">New economic policy proposed in parliament today.</p>
+<p class="text-sm font-semibold leading-snug">
+New economic policy proposed in parliament today.
+</p>
 <p class="text-slate-400 text-xs mt-1">45m ago • 1.8k reading</p>
 </div>
+
 <div class="flex flex-col gap-1">
 <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Entertainment</span>
-<p class="text-sm font-semibold leading-snug">Film festival winners announced for the 2024 season.</p>
+<p class="text-sm font-semibold leading-snug">
+Film festival winners announced for the 2024 season.
+</p>
 <p class="text-slate-400 text-xs mt-1">1h ago • 12k reading</p>
 </div>
+
 </div>
-<div class="mt-10 p-4 bg-slate-50 rounded-xl border border-slate-100">
-<h4 class="font-bold text-sm text-slate-800 mb-2 flex items-center gap-2">
+
+<div class="mt-10 p-4 bg-slate-50 dark:bg-[#1b2631] rounded-xl border border-slate-100 dark:border-[#283039]">
+
+<h4 class="font-bold text-sm text-slate-800 dark:text-white mb-2 flex items-center gap-2">
 <span class="material-symbols-outlined text-primary text-sm">auto_awesome</span>
-                    Personalized For You
-                </h4>
-<p class="text-slate-500 text-xs leading-relaxed">We've found 12 new articles matching your interests in Technology and Science.</p>
+Personalized For You
+</h4>
+
+<p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">
+We've found 12 new articles matching your interests in Technology and Science.
+</p>
+
 </div>
+
 </aside>
+
 </div>
-</body></html>
+
+<script src="../Components/Header/Header.js"></script>
+<script src="../Components/Sidebar/Sidebar.js" type="module"></script>
+</body>
+</html>

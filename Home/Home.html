@@ -58,40 +58,7 @@
 </head>
 <body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white min-h-screen">
 <div class="max-w-[1440px] mx-auto flex">
-<aside class="w-64 hidden xl:flex flex-col h-[calc(100vh-64px)] sticky top-16 p-4 gap-2 border-r border-[#d1d5db] dark:border-[#283039] bg-white dark:bg-background-dark">
-
-  <nav class="flex flex-col gap-1">
-
-    <!-- Home -->
-    <a href="../Home/Home.html"
-       class="sidebar-link active">
-      <span class="material-symbols-outlined">home</span>
-      <span>Home</span>
-    </a>
-
-    <!-- Explore -->
-    <a href="../Explore/Explore.html"
-       class="sidebar-link">
-      <span class="material-symbols-outlined">explore</span>
-      <span>Explore</span>
-    </a>
-
-    <!-- Bookmarks -->
-    <a href="../Bookmark List/BookmarkList.html"
-       class="sidebar-link">
-      <span class="material-symbols-outlined">bookmark</span>
-      <span>Bookmarks</span>
-    </a>
-
-    <!-- Settings -->
-    <a href="../Settings Page/Settings.html"
-       class="sidebar-link">
-      <span class="material-symbols-outlined">settings</span>
-      <span>Settings</span>
-    </a>
-
-  </nav>
-</aside>
+<div id="sidebarContainer"></div>
 
 
 <main class="flex-1 min-w-0 pb-10">
@@ -261,3 +228,4 @@ aside::-webkit-scrollbar-thumb {
 </style>
 
 <script src="../Components/Header/Header.js"></script>
+<script src="../Components/Sidebar/Sidebar.js" type="module"></script>
