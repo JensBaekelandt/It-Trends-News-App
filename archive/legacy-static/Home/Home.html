@@ -25,6 +25,10 @@
             },
         }
     </script>
+    <script src="../LoginPage/auth.js"></script>
+<script>
+requireLogin(); // forces login before accessing Home page
+</script>
 <style type="text/tailwindcss">
         body {
             font-family: "Work Sans", sans-serif;
@@ -114,6 +118,7 @@ aside::-webkit-scrollbar-thumb {
 <button class="flex size-10 cursor-pointer items-center justify-center rounded-lg bg-white dark:bg-[#283039] border border-[#d1d5db] dark:border-none text-[#111418] dark:text-white">
 <span class="material-symbols-outlined">light_mode</span>
 </button>
+<button onclick="logout()" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">Logout</button>
 </div>
 <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-[#d1d5db] dark:border-[#283039]" data-alt="User profile avatar portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCpbqFAAwgpFzD0LJvqvh9kI9zpNqUIXZ7gRebZBbPLvQtGJsjY6__m7M4W_pnSMXEOZwWpU93jxIZ_DzrqrGvuAillA9S43dyQabxBbXdDroBfWHJ4ex7UzuvZKeyjtr9ju9tuyoHJzgjUmi70cHUFtsWye_6xkUENkK6-d-lI4uzi1XBPZUPVV4Qif0DkUloDEW1KveFrMXdKmHNsMo04Xklhny5wgvxnAPmNUS9Sn3bR6B3NjX6jmCxY2u95I1tcHqr5p9zv");'></div>
 </div>
