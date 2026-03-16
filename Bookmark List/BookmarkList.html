@@ -89,7 +89,7 @@
             </svg>
           </div>
           <h2 class="text-xl font-bold tracking-tight text-[#111418] dark:text-white">NewsRoom</h2>
-        </div>
+        </div>https://github.com/JensBaekelandt/It-Trends-News-App/pull/17/conflict?name=Explore%252FExplore.html&ancestor_oid=910ae181ce391ae307071670508012b72478c910&base_oid=2633957c2a00f71f4088509abb888281cafd9869&head_oid=2f35379c73658e7d2170fdcad14a6b8eb32a518e
       </div>
 
       <div class="flex items-center gap-4">
@@ -107,6 +107,31 @@
              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCpbqFAAwgpFzD0LJvqvh9kI9zpNqUIXZ7gRebZBbPLvQtGJsjY6__m7M4W_pnSMXEOZwWpU93jxIZ_DzrqrGvuAillA9S43dyQabxBbXdDroBfWHJ4ex7UzuvZKeyjtr9ju9tuyoHJzgjUmi70cHUFtsWye_6xkUENkK6-d-lI4uzi1XBPZUPVV4Qif0DkUloDEW1KveFrMXdKmHNsMo04Xklhny5wgvxnAPmNUS9Sn3bR6B3NjX6jmCxY2u95I1tcHqr5p9zv");'>
         </div>
       </div>
+    </div>
+  </header>
+
+  <div class="max-w-[1440px] mx-auto flex">
+    <!-- SIDEBAR -->
+   <div id="sidebarContainer"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 min-w-0 pb-10">
+      <div class="max-w-[920px] mx-auto">
+        <!-- PAGE HEADER -->
+        <div class="pt-8 px-6 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+          <div>
+            <h1 id="pageTitle" class="text-[#111418] dark:text-white text-3xl font-bold tracking-tight">Saved Bookmarks</h1>
+            <p id="pageSubtitle" class="text-[#4b5563] dark:text-[#9dabb9] text-sm mt-1">Manage your curated list of saved articles and resources.</p>
+          </div>
+
+          <div class="flex flex-col gap-1 md:items-end">
+            <label id="sortByLabel" for="sortSelect" class="text-[10px] font-bold tracking-widest text-[#9dabb9] uppercase">Sort by</label>
+            <select id="sortSelect" class="w-[150px] rounded-lg border border-[#d1d5db] dark:border-[#283039] bg-white dark:bg-[#1a242f] text-sm font-medium text-[#111418] dark:text-white px-3 py-2.5">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="az">Alphabetical (A-Z)</option>
+            </select>
+          </div>
     </header>
 
     <div class="max-w-[1440px] mx-auto flex">
@@ -233,5 +258,6 @@
   </div>
 
   <script src="BookmarkList.js"></script>
+  <script src="../Components/Sidebar/Sidebar.js" type="module"></script>
 </body>
 </html>
