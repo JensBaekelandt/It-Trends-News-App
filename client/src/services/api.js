@@ -20,6 +20,11 @@ export const api = {
   getExplore: () => request('/explore'),
   getBookmarks: () => request('/bookmarks'),
   getArticle: (id) => request(`/articles/${id}`),
+  generateArticleSummary: (id, payload) =>
+    request(`/articles/${id}/summary`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
   getSettings: () => request('/settings'),
   updateSettings: (payload) =>
     request('/settings', {

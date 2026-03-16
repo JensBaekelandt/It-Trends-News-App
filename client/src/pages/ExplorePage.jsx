@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { exploreCopy, getLanguageCopy } from '../localization/copy';
 import { api } from '../services/api';
 import { useAppContext } from '../state/AppContext';
 
@@ -10,80 +11,13 @@ const topicImages = [
   'https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=900&auto=format&fit=crop',
 ];
 
-const COPY = {
-  en: {
-    loading: 'Loading explore...',
-    noResults: 'No results',
-    noResultsBody: 'Try a different search term or clear your filters.',
-    clearSearch: 'Clear search',
-    heading: 'Explore Topics',
-    subtitle: 'Discover new interests and trusted global news sources.',
-    searchPlaceholder: 'Search Topics, Tags, or Sources...',
-    trending: 'Trending Topics',
-    viewAll: 'View All',
-    follow: 'Follow',
-    trustedSources: 'Trusted Sources',
-    verified: 'VERIFIED',
-    liveTrends: 'Live Trends',
-    personalizedTitle: 'Personalized For You',
-    personalizedText: 'We\'ve found 12 new articles matching your interests in Technology and Science.',
-    liveTrendsData: [
-      { tag: 'GLOBAL • LIVE', title: 'Major tech breakthrough in quantum computing reported.', meta: '12m ago • 4.2k reading' },
-      { tag: 'POLITICS', title: 'New economic policy proposed in parliament today.', meta: '45m ago • 1.8k reading' },
-      { tag: 'ENTERTAINMENT', title: 'Film festival winners announced for the 2024 season.', meta: '1h ago • 12k reading' },
-    ],
-    sources: [
-      { name: 'TechCrunch', description: 'Startups, AI and product launches.' },
-      { name: 'Wired', description: 'Deep dives on innovation and society.' },
-      { name: 'Reuters', description: 'Global business and policy updates.' },
-    ],
-    topicMap: {
-      technology: { name: 'Technology', description: 'AI, cloud and product innovation.' },
-      cybersecurity: { name: 'Cybersecurity', description: 'Threats, policy and zero-trust updates.' },
-      startups: { name: 'Startups', description: 'Funding, scale-ups and market movement.' },
-    },
-  },
-  nl: {
-    loading: 'Verkennen laden...',
-    noResults: 'Geen resultaten',
-    noResultsBody: 'Probeer een andere zoekterm of wis je filters.',
-    clearSearch: 'Zoekopdracht wissen',
-    heading: 'Onderwerpen Verkennen',
-    subtitle: 'Ontdek nieuwe interesses en betrouwbare wereldwijde nieuwsbronnen.',
-    searchPlaceholder: 'Zoek onderwerpen, tags of bronnen...',
-    trending: 'Trending Onderwerpen',
-    viewAll: 'Bekijk Alles',
-    follow: 'Volgen',
-    trustedSources: 'Betrouwbare Bronnen',
-    verified: 'GEVERIFIEERD',
-    liveTrends: 'Live Trends',
-    personalizedTitle: 'Gepersonaliseerd Voor Jou',
-    personalizedText: 'We hebben 12 nieuwe artikelen gevonden op basis van je interesses in Technologie en Wetenschap.',
-    liveTrendsData: [
-      { tag: 'WERELD • LIVE', title: 'Grote technologische doorbraak in quantum computing gemeld.', meta: '12m geleden • 4.2k lezers' },
-      { tag: 'POLITIEK', title: 'Nieuw economisch beleid vandaag voorgesteld in het parlement.', meta: '45m geleden • 1.8k lezers' },
-      { tag: 'ENTERTAINMENT', title: 'Winnaars van het filmfestival voor seizoen 2024 bekendgemaakt.', meta: '1u geleden • 12k lezers' },
-    ],
-    sources: [
-      { name: 'TechCrunch', description: 'Startups, AI en productlanceringen.' },
-      { name: 'Wired', description: 'Diepgaande analyses over innovatie en maatschappij.' },
-      { name: 'Reuters', description: 'Wereldwijde updates over business en beleid.' },
-    ],
-    topicMap: {
-      technology: { name: 'Technologie', description: 'AI, cloud en productinnovatie.' },
-      cybersecurity: { name: 'Cybersecurity', description: 'Dreigingen, beleid en zero-trust updates.' },
-      startups: { name: 'Startups', description: 'Financiering, scale-ups en marktbeweging.' },
-    },
-  },
-};
-
 export default function ExplorePage() {
   const { language } = useAppContext();
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchParams] = useSearchParams();
-  const text = COPY[language] || COPY.en;
+  const text = getLanguageCopy(exploreCopy, language);
 
   const localizedTopics = useMemo(
     () => topics.map((topic) => {

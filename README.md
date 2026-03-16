@@ -34,6 +34,16 @@ npm run dev
 
 Backend runs on `http://localhost:4000`.
 
+### Anthropic setup for AI summaries
+
+Create `server/.env` based on `server/.env.example` and add:
+
+```bash
+ANTHROPIC_API_KEY=your_real_key_here
+```
+
+The Article View page can then generate AI summaries through the backend.
+
 ### Run the frontend
 
 ```bash
@@ -65,5 +75,6 @@ Frontend runs on `http://localhost:5173`.
 - `GET /api/explore`
 - `GET /api/bookmarks`
 - `GET /api/articles/:id`
+- `POST /api/articles/:id/summary`
 - `GET /api/settings`
 - `PUT /api/settings`

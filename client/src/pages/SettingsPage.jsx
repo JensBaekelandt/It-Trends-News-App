@@ -1,84 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { getLanguageCopy, settingsCopy } from '../localization/copy';
 import { api } from '../services/api';
 import { useAppContext } from '../state/AppContext';
 
-const COPY = {
-  en: {
-    loading: 'Loading settings...',
-    emptyTitle: 'No settings available',
-    emptyBody: 'Please refresh and try again.',
-    settings: 'Settings',
-    appearance: 'Appearance',
-    language: 'Language',
-    account: 'Account',
-    notifications: 'Notifications',
-    privacy: 'Privacy & Security',
-    appearanceSub: 'Customize how NewsRoom looks on your device.',
-    languageSub: 'Manage your language and regional preferences.',
-    accountSub: 'Manage your profile and connected services.',
-    notificationsSub: 'Control how and when you receive updates.',
-    privacySub: 'Manage your data protection and account security settings.',
-    darkMode: 'Dark Mode',
-    darkModeDesc: 'Use a dark theme for a better night experience.',
-    compactView: 'Compact View',
-    compactViewDesc: 'Display more headlines on the screen at once.',
-    displayLanguage: 'Display Language',
-    emailAddress: 'Email Address',
-    changeEmail: 'Change Email',
-    googleAccount: 'Google Account',
-    connected: 'Connected',
-    disconnect: 'Disconnect',
-    breakingNews: 'Breaking News Alerts',
-    breakingNewsDesc: 'Receive push notifications for major headlines.',
-    digestFrequency: 'Email Digest Frequency',
-    profileVisibility: 'Profile Visibility',
-    twoFactor: 'Two-Factor Authentication',
-    twoFactorDesc: 'Add an extra layer of security to your account.',
-    discard: 'Discard changes',
-    save: 'Save Changes',
-    saved: 'Settings saved',
-  },
-  nl: {
-    loading: 'Instellingen laden...',
-    emptyTitle: 'Geen instellingen beschikbaar',
-    emptyBody: 'Ververs de pagina en probeer opnieuw.',
-    settings: 'Instellingen',
-    appearance: 'Uiterlijk',
-    language: 'Taal',
-    account: 'Account',
-    notifications: 'Meldingen',
-    privacy: 'Privacy & Beveiliging',
-    appearanceSub: 'Pas aan hoe NewsRoom eruitziet op je toestel.',
-    languageSub: 'Beheer je taal- en regiovoorkeuren.',
-    accountSub: 'Beheer je profiel en gekoppelde diensten.',
-    notificationsSub: 'Bepaal hoe en wanneer je updates ontvangt.',
-    privacySub: 'Beheer gegevensbescherming en accountbeveiliging.',
-    darkMode: 'Donkere modus',
-    darkModeDesc: 'Gebruik een donker thema voor een betere nachtweergave.',
-    compactView: 'Compacte weergave',
-    compactViewDesc: 'Toon meer headlines tegelijk op het scherm.',
-    displayLanguage: 'Weergavetaal',
-    emailAddress: 'E-mailadres',
-    changeEmail: 'E-mail wijzigen',
-    googleAccount: 'Google-account',
-    connected: 'Verbonden',
-    disconnect: 'Verbinding verbreken',
-    breakingNews: 'Breaking news meldingen',
-    breakingNewsDesc: 'Ontvang pushmeldingen voor grote headlines.',
-    digestFrequency: 'Frequentie e-mailoverzicht',
-    profileVisibility: 'Profielzichtbaarheid',
-    twoFactor: 'Tweestapsverificatie',
-    twoFactorDesc: 'Voeg extra beveiliging toe aan je account.',
-    discard: 'Wijzigingen verwerpen',
-    save: 'Wijzigingen opslaan',
-    saved: 'Instellingen opgeslagen',
-  },
-};
-
 export default function SettingsPage() {
   const { language: appLanguage, setLanguage: setAppLanguage, theme: appTheme, toggleTheme } = useAppContext();
-  const text = COPY[appLanguage] || COPY.en;
+  const text = getLanguageCopy(settingsCopy, appLanguage);
   const [settings, setSettings] = useState({ theme: 'light', language: 'en' });
   const [draft, setDraft] = useState({
     theme: 'light',
