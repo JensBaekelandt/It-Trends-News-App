@@ -48,7 +48,9 @@ tailwind.config = {
         <input id="loginPassword" type="password" required placeholder="Enter your password" 
           class="form-input w-full rounded-lg text-slate-900 dark:text-white border border-gray-300 dark:border-[#3b4754] bg-white dark:bg-[#1c2127] h-14 p-[15px]"/>
       </div>
-
+        <div class="flex justify-end">
+            <a class="text-primary text-sm font-medium leading-normal hover:underline" href="ForgotPassword.html">Forgot Password?</a>
+        </div>
       <button type="submit" class="w-full flex items-center justify-center rounded-lg h-14 px-6 bg-primary text-white text-base font-bold hover:bg-blue-600">
         Sign In
       </button>
@@ -63,13 +65,13 @@ tailwind.config = {
 
 <script src="auth.js"></script>
 <script>
-redirectIfLoggedIn(); // redirect if already logged in
+redirectIfLoggedIn();
 
 document.getElementById("loginForm").addEventListener("submit", function(e){
   e.preventDefault();
   let email = document.getElementById("loginEmail").value;
   let password = document.getElementById("loginPassword").value;
-  login(email, password); // calls auth.js
+  login(email, password);
 });
 </script>
 

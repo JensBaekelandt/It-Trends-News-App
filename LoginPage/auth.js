@@ -43,3 +43,36 @@ function redirectIfLoggedIn() {
     let user = localStorage.getItem("loggedInUser");
     if (user) window.location.href = "../Home/Home.html";
 }
+
+function sendResetLink(email) {
+    let users = getUsers();
+    let user = users.find(u => u.email === email);
+    if (!user) {
+        alert("Email not found");
+        return;
+    }
+
+    localStorage.setItem("resetEmail", email);
+    alert("Reset link sent! Click OK to set a new password.");
+    window.location.href = "ResetPassword.html";
+}
+
+function resetPassword(newPassword) {
+    let email = localStorage.getItem("resetEmail");
+    if (!email) {
+        alert("No password reset requested");
+        window.location.href = "loginPage.html";
+        return;
+    }
+    let users = getUsers();
+    let user = users.find(u => u.email === email);
+    if (!user) {
+        alert("User not found");
+        return;
+    }
+    user.password = newPassword;
+    saveUsers(users);
+    localStorage.removeItem("resetEmail");
+    alert("Password successfully reset!");
+    window.location.href = "loginPage.html";
+}
