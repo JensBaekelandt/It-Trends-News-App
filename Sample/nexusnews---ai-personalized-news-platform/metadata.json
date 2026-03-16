@@ -1,0 +1,5 @@
+{
+  "name": "NexusNews - AI Personalized News Platform",
+  "description": "A sophisticated news aggregation platform that uses AI to provide a personalized feed based on your followed topics and sources. Supports multiple languages (English, Dutch, Chinese, Turkish), dark/light modes, and article bookmarking.",
+  "requestFramePermissions": []
+}
