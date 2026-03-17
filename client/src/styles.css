@@ -1321,3 +1321,33 @@ html.dark .related-section {
     font-size: 34px;
   }
 }
+
+.home-sidebar {
+  position: sticky;
+  top: 84px;
+  max-height: calc(100vh - 84px);
+  overflow-y: auto;
+  padding-right: 4px; 
+}
+
+.home-sidebar {
+  position: sticky;
+  top: 84px;
+  max-height: calc(100vh - 84px);
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.filter-row {
+  margin-top: 20px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-btn-active {
+  background: #137fec !important;
+  color: #fff !important;
+  border-color: #137fec !important;
+}
+

@@ -41,9 +41,7 @@ export default function AppLayout() {
 
       <div className="app-shell">
         <aside className="sidebar">
-          <a className="sidebar-link" href="/Home/Home.html" target="_blank" rel="noreferrer">
-            Home (legacy)
-          </a>
+          <SidebarLink to="/home">Home</SidebarLink>
           <SidebarLink to="/explore">{labels.explore}</SidebarLink>
           <SidebarLink to="/bookmarks">{labels.bookmarks}</SidebarLink>
           <SidebarLink to="/settings">{labels.settings}</SidebarLink>

@@ -10,7 +10,7 @@ import BookmarksPage from './pages/BookmarksPage';
 import ArticleViewPage from './pages/ArticleViewPage';
 import SettingsPage from './pages/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
-
+import HomePage from './pages/HomePage.jsx';
 export default function App() {
   return (
     <Routes>
@@ -22,6 +22,7 @@ export default function App() {
       <Route path="/reset-password" element={<ResetPasswordPage />} />
 
       <Route element={<AppLayout />}>
+        <Route path="/home" element={<HomePage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/bookmarks" element={<BookmarksPage />} />
         <Route path="/article/:id" element={<ArticleViewPage />} />

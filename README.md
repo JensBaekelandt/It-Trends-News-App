@@ -3,9 +3,8 @@ Group Project For It Trends
 
 ## Node.js + React migration (phase 1)
 
-This repository now includes a new Node.js + React stack for all pages except Home.
+This repository now includes a new Node.js + React stack for all pages
 
-- Home page is intentionally **not migrated** and left untouched in `Home/`.
 - New React frontend: `client/`
 - New Node.js backend: `server/`
 - Archived legacy static folders: `archive/legacy-static/`
@@ -21,8 +20,7 @@ The previous static HTML/CSS/JS implementation has been archived to keep the roo
 - `archive/legacy-static/LoginPage/`
 - `archive/legacy-static/onboarding page/`
 - `archive/legacy-static/Settings Page/`
-
-`Home/` intentionally remains in the root because it was excluded from the migration.
+-  archive/lecacy-static/Settings Page/
 
 ### Run the backend
 
@@ -65,6 +63,7 @@ Frontend runs on `http://localhost:5173`.
 - `/bookmarks`
 - `/article/:id`
 - `/settings`
+- `/home`
 
 ### API endpoints in Node.js
 
