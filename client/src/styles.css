@@ -745,6 +745,10 @@ html.dark .search-input {
   margin: 0 auto;
 }
 
+.article-top-actions {
+  margin-bottom: 16px;
+}
+
 .breadcrumbs {
   color: #64748b;
   font-size: 14px;
@@ -763,6 +767,33 @@ html.dark .search-input {
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 24px;
+}
+
+.ai-summary-content {
+  display: grid;
+  gap: 12px;
+}
+
+.ai-summary-headline {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.ai-summary-list {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+}
+
+.ai-summary-takeaway,
+.summary-error {
+  margin: 0;
+}
+
+.summary-error {
+  color: #b91c1c;
 }
 
 html.dark .summary-card {

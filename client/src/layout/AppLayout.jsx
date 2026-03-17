@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { appLayoutCopy, getLanguageCopy } from '../localization/copy';
 import { useAppContext } from '../state/AppContext';
 
 function SidebarLink({ to, children }) {
@@ -16,10 +17,7 @@ function SidebarLink({ to, children }) {
 
 export default function AppLayout() {
   const { theme, language, toggleTheme, toggleLanguage } = useAppContext();
-
-  const labels = language === 'nl'
-    ? { explore: 'Verkennen', bookmarks: 'Bladwijzers', settings: 'Instellingen' }
-    : { explore: 'Explore', bookmarks: 'Bookmarks', settings: 'Settings' };
+  const labels = getLanguageCopy(appLayoutCopy, language);
 
   return (
     <div className="workspace-shell">

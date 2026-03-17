@@ -1,117 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
+import { articleCopy, getLanguageCopy } from '../localization/copy';
 import { api } from '../services/api';
 import { useAppContext } from '../state/AppContext';
-
-const COPY = {
-  en: {
-    loading: 'Loading article...',
-    emptyTitle: 'No article data',
-    emptyBody: 'Try opening another article.',
-    breadcrumbs: 'Home / Technology / Article',
-    authorName: 'Marcus Chen',
-    authorMeta: 'Senior Tech Correspondent • Oct 24, 2023',
-    summaryTitle: 'AI Summary Generated',
-    sectionOne: 'The Shift from Centralization',
-    sectionOneBody:
-      'The traditional media landscape has long been dominated by centralized platforms. Decentralized models introduce verifiable sources and stronger trust mechanisms.',
-    quote:
-      'The goal is not just moving content to another server, but changing how credibility is verified.',
-    sectionTwo: 'Verifiable Credibility',
-    sectionTwoBody:
-      'Cryptographic signatures and transparent metadata make each story easier to validate and audit.',
-    tags: ['#BLOCKCHAIN', '#FUTUREOFMEDIA', '#TECHNOLOGY'],
-    relatedTitle: 'Related Stories',
-    related: [
-      'How Web3 is Changing the Creator Economy Forever',
-      'Top 10 Emerging Technologies to Watch in 2024',
-    ],
-    overrides: {
-      12: {
-        title: 'EU AI Act: What changes for product teams',
-        summary: 'A practical view on compliance impact for software teams.',
-        content:
-          'The EU AI Act introduces risk-based obligations. Teams should classify systems, document datasets and establish human oversight where required.',
-      },
-      11: {
-        title: 'How edge AI is moving into mainstream apps',
-        summary: 'On-device models are becoming practical for modern products.',
-        content:
-          'Edge AI helps reduce latency and preserve privacy by processing data locally. Tooling is improving for mobile and desktop deployment.',
-      },
-    },
-  },
-  nl: {
-    loading: 'Artikel laden...',
-    emptyTitle: 'Geen artikelgegevens',
-    emptyBody: 'Probeer een ander artikel te openen.',
-    breadcrumbs: 'Home / Technologie / Artikel',
-    authorName: 'Marcus Chen',
-    authorMeta: 'Senior Tech Correspondent • 24 okt 2023',
-    summaryTitle: 'AI-samenvatting gegenereerd',
-    sectionOne: 'De verschuiving weg van centralisatie',
-    sectionOneBody:
-      'Het traditionele medialandschap werd lange tijd gedomineerd door gecentraliseerde platformen. Gedecentraliseerde modellen brengen verifieerbare bronnen en sterkere vertrouwensmechanismen.',
-    quote:
-      'Het doel is niet alleen content naar een andere server verplaatsen, maar veranderen hoe geloofwaardigheid wordt geverifieerd.',
-    sectionTwo: 'Verifieerbare geloofwaardigheid',
-    sectionTwoBody:
-      'Cryptografische handtekeningen en transparante metadata maken elk verhaal makkelijker te valideren en te auditen.',
-    tags: ['#BLOCKCHAIN', '#TOEKOMSTVANMEDIA', '#TECHNOLOGIE'],
-    relatedTitle: 'Gerelateerde Verhalen',
-    related: [
-      'Hoe Web3 de creator economy voorgoed verandert',
-      'Top 10 opkomende technologieën om in 2024 te volgen',
-    ],
-    overrides: {
-      12: {
-        title: 'EU AI Act: wat verandert er voor productteams',
-        summary: 'Een praktisch overzicht van de compliance-impact voor softwareteams.',
-        content:
-          'De EU AI Act introduceert verplichtingen op basis van risiconiveaus. Teams moeten systemen classificeren, datasets documenteren en menselijke controle waar nodig voorzien.',
-      },
-      11: {
-        title: 'Hoe edge AI mainstream toepassingen binnenkomt',
-        summary: 'On-device modellen worden praktischer voor moderne producten.',
-        content:
-          'Edge AI verlaagt latency en beschermt privacy door data lokaal te verwerken. De tooling voor mobiele en desktopuitrol wordt steeds beter.',
-      },
-      10: {
-        title: '10 gezondste superfoods om toe te voegen in 2024',
-        summary: 'Een praktische lijst met voedzame keuzes voor elke dag.',
-        content:
-          'Evenwichtige voedingspatronen zijn makkelijker vol te houden wanneer maaltijden rond pure ingrediënten en eenvoudige routines worden opgebouwd.',
-      },
-      9: {
-        title: 'Telescoop detecteert waterdamp op verre exoplaneet',
-        summary: 'Nieuwe metingen verbeteren het inzicht in exoplaneetklimaten.',
-        content:
-          'Observaties met moderne telescopen verbeteren voortdurend atmosferische modellen en de langetermijnkarakterisering van exoplaneten.',
-      },
-      8: {
-        title: 'Quantum computing en de volgende veiligheidsgrens',
-        summary: 'Waarom quantumbeleid nu een board-level onderwerp is.',
-        content:
-          'Securityteams evalueren post-quantum migratiepaden terwijl regelgevers en standaardisatieorganisaties de richtlijnen versnellen.',
-      },
-      7: {
-        title: 'Centrale banken sturen op nieuwe beleidswijzigingen',
-        summary: 'Markten reageren op nieuwe richtlijnen en renteverwachtingen.',
-        content:
-          'Toekomstgerichte indicatoren tonen dat beleidsbeslissingen afhankelijk blijven van data terwijl inflatie geleidelijk normaliseert.',
-      },
-    },
-  },
-};
 
 export default function ArticleViewPage() {
   const { language } = useAppContext();
   const { id } = useParams();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [generatedSummary, setGeneratedSummary] = useState(null);
+  const [summaryLoading, setSummaryLoading] = useState(false);
+  const [summaryError, setSummaryError] = useState('');
   const [searchParams] = useSearchParams();
-  const text = COPY[language] || COPY.en;
+  const text = getLanguageCopy(articleCopy, language);
 
   useEffect(() => {
     if (!id) return;
@@ -129,6 +32,8 @@ export default function ArticleViewPage() {
       } else {
         setArticle(data.article);
       }
+      setGeneratedSummary(null);
+      setSummaryError('');
       setLoading(false);
     });
   }, [id, searchParams]);
@@ -149,9 +54,28 @@ export default function ArticleViewPage() {
     return <section className="page-panel"><div className="empty-box"><h2>{text.emptyTitle}</h2><p>{text.emptyBody}</p></div></section>;
   }
 
+  const handleGenerateSummary = async () => {
+    setSummaryLoading(true);
+    setSummaryError('');
+
+    try {
+      const result = await api.generateArticleSummary(articleId, { language });
+      setGeneratedSummary(result.summary);
+    } catch {
+      setSummaryError(text.summaryError);
+    } finally {
+      setSummaryLoading(false);
+    }
+  };
+
   return (
     <section className="article-shell">
       <nav className="breadcrumbs">{text.breadcrumbs}</nav>
+      <div className="article-top-actions">
+        <button className="button" type="button" onClick={handleGenerateSummary} disabled={summaryLoading}>
+          {summaryLoading ? text.generatingSummary : text.generateSummary}
+        </button>
+      </div>
       <h1 className="article-title">{translatedArticle.title}</h1>
 
       <div className="author-row">
@@ -163,8 +87,24 @@ export default function ArticleViewPage() {
       </div>
 
       <div className="summary-card">
-        <h3>{text.summaryTitle}</h3>
-        <p>{translatedArticle.summary}</p>
+        <h3>{generatedSummary ? text.generatedBadge : text.summaryTitle}</h3>
+        {generatedSummary ? (
+          <div className="ai-summary-content">
+            <p className="ai-summary-headline">{generatedSummary.headline}</p>
+            <ul className="ai-summary-list">
+              {generatedSummary.bullets.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
+            <p className="ai-summary-takeaway"><strong>{text.takeaway}:</strong> {generatedSummary.takeaway}</p>
+          </div>
+        ) : (
+          <div className="ai-summary-content">
+            <p className="ai-summary-headline">{text.summaryEmpty}</p>
+            <p>{text.summaryEmptyBody}</p>
+          </div>
+        )}
+        {summaryError ? <p className="summary-error">{summaryError}</p> : null}
       </div>
 
       <article className="article-body">

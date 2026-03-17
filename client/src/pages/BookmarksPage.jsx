@@ -1,92 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
+import { bookmarkNlOverrides, bookmarksCopy, getLanguageCopy } from '../localization/copy';
 import { api } from '../services/api';
 import { useAppContext } from '../state/AppContext';
-
-const COPY = {
-  en: {
-    loading: 'Loading bookmarks...',
-    emptyTitle: 'No bookmarks yet',
-    emptyBody: 'Save articles to read later. Your bookmarks will appear here.',
-    title: 'Saved Bookmarks',
-    subtitle: 'Manage your curated list of saved articles and resources.',
-    sortBy: 'Sort by',
-    newest: 'Newest First',
-    oldest: 'Oldest First',
-    az: 'Alphabetical (A-Z)',
-    open: 'Open article',
-    delete: 'Delete',
-    previous: 'Previous',
-    next: 'Next Page',
-    showing: (from, to, total) => `Showing ${from}-${to} of ${total} saved articles`,
-    savedLabel: (time) => `Saved ${time}`,
-    readLabel: (minutes) => `${minutes} min read`,
-  },
-  nl: {
-    loading: 'Bladwijzers laden...',
-    emptyTitle: 'Nog geen bladwijzers',
-    emptyBody: 'Sla artikels op om later te lezen. Je bladwijzers verschijnen hier.',
-    title: 'Opgeslagen bladwijzers',
-    subtitle: 'Beheer je lijst met opgeslagen artikelen en bronnen.',
-    sortBy: 'Sorteren op',
-    newest: 'Nieuwste eerst',
-    oldest: 'Oudste eerst',
-    az: 'Alfabetisch (A-Z)',
-    open: 'Artikel openen',
-    delete: 'Verwijderen',
-    previous: 'Vorige',
-    next: 'Volgende pagina',
-    showing: (from, to, total) => `Toont ${from}-${to} van ${total} opgeslagen artikelen`,
-    savedLabel: (time) => `Opgeslagen ${time}`,
-    readLabel: (minutes) => `${minutes} min leestijd`,
-  },
-};
 
 const categoryClassByName = {
   TECHNOLOGY: 'cat-tech',
   FINANCE: 'cat-finance',
   LIFESTYLE: 'cat-lifestyle',
   SCIENCE: 'cat-science',
-};
-
-const BOOKMARK_NL_OVERRIDES = {
-  12: {
-    category: 'TECHNOLOGIE',
-    source: 'TechCrunch',
-    title: 'EU AI Act: wat verandert er voor productteams',
-    summary: 'Een praktisch overzicht van de compliance-impact voor softwareteams.',
-  },
-  11: {
-    category: 'FINANCIËN',
-    source: 'Bloomberg',
-    title: 'Hoe edge AI mainstream toepassingen binnenkomt',
-    summary: 'On-device modellen worden praktischer voor moderne producten.',
-  },
-  10: {
-    category: 'LIFESTYLE',
-    source: 'NY Times',
-    title: '10 gezondste superfoods om toe te voegen in 2024',
-    summary: 'Een praktische lijst met voedzame keuzes voor elke dag.',
-  },
-  9: {
-    category: 'WETENSCHAP',
-    source: 'NASA Nieuws',
-    title: 'Telescoop detecteert waterdamp op verre exoplaneet',
-    summary: 'Nieuwe metingen verbeteren het inzicht in exoplaneetklimaten.',
-  },
-  8: {
-    category: 'TECHNOLOGIE',
-    source: 'The Verge',
-    title: 'Quantum computing en de volgende veiligheidsgrens',
-    summary: 'Waarom quantumbeleid nu een board-level onderwerp is.',
-  },
-  7: {
-    category: 'FINANCIËN',
-    source: 'Reuters',
-    title: 'Centrale banken sturen op nieuwe beleidswijzigingen',
-    summary: 'Markten reageren op nieuwe richtlijnen en renteverwachtingen.',
-  },
 };
 
 const FALLBACK_IMAGE_BY_ID = {
@@ -113,7 +36,7 @@ function withLanguageBookmark(item, language) {
     return item;
   }
 
-  const override = BOOKMARK_NL_OVERRIDES[item.id];
+  const override = bookmarkNlOverrides[item.id];
   if (!override) {
     return item;
   }
@@ -129,7 +52,7 @@ function withLanguageBookmark(item, language) {
 
 export default function BookmarksPage() {
   const { language } = useAppContext();
-  const text = COPY[language] || COPY.en;
+  const text = getLanguageCopy(bookmarksCopy, language);
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState('newest');
