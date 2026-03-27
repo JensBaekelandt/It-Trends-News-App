@@ -123,7 +123,10 @@ app.post('/api/auth/signup', (req, res) => {
   }
   const user = { id: `u${store.users.length + 1}`, name, email, password };
   store.users.push(user);
-  return res.status(201).json({ message: 'Account created' });
+  return res.status(201).json({
+    message: 'Account created',
+    user: { id: user.id, name: user.name, email: user.email },
+  });
 });
 
 app.post('/api/auth/forgot-password', (req, res) => {

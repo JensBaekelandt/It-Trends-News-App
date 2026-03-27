@@ -16,8 +16,9 @@ function SidebarLink({ to, children }) {
 }
 
 export default function AppLayout() {
-  const { theme, language, toggleTheme, toggleLanguage } = useAppContext();
+  const { theme, language, user, toggleTheme, toggleLanguage } = useAppContext();
   const labels = getLanguageCopy(appLayoutCopy, language);
+  const displayName = user?.name || 'Guest';
 
   return (
     <div className="workspace-shell">
@@ -34,7 +35,7 @@ export default function AppLayout() {
           </button>
           <div className="avatar-pill">
             <span className="avatar-dot" />
-            <span>Alex Rivera</span>
+            <span>{displayName}</span>
           </div>
         </div>
       </header>
