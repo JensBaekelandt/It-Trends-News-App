@@ -21,6 +21,50 @@ const FALLBACK_IMAGE_BY_ID = {
   7: 'https://picsum.photos/id/1060/600/380',
 };
 
+const HOME_BOOKMARKS_KEY = 'newsroomHomeBookmarks';
+const HOME_BOOKMARK_IDS_KEY = 'savedBookmarks';
+
+function readHomeBookmarks() {
+  try {
+    const raw = window.localStorage.getItem(HOME_BOOKMARKS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function readHomeBookmarkIds() {
+  try {
+    const raw = window.localStorage.getItem(HOME_BOOKMARK_IDS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function removeHomeBookmarkById(id) {
+  const idNumber = Number(id);
+  const ids = readHomeBookmarkIds();
+  const nextIds = ids.filter((itemId) => itemId !== idNumber && itemId !== id);
+  window.localStorage.setItem(HOME_BOOKMARK_IDS_KEY, JSON.stringify(nextIds));
+
+  const items = readHomeBookmarks();
+  const next = items.filter((item) => item.id !== id);
+  window.localStorage.setItem(HOME_BOOKMARKS_KEY, JSON.stringify(next));
+}
+
+function getSortValue(item) {
+  if (Number.isFinite(item.savedAt)) {
+    return item.savedAt;
+  }
+  if (Number.isFinite(item.id)) {
+    return item.id;
+  }
+  return 0;
+}
+
 function withFallbackBookmark(item) {
   const fallbackImage = FALLBACK_IMAGE_BY_ID[item.id] || 'https://picsum.photos/seed/newsroom/600/380';
   return {
@@ -70,10 +114,15 @@ export default function BookmarksPage() {
     }
 
     api.getBookmarks().then((data) => {
+      const homeBookmarkIds = new Set(readHomeBookmarkIds());
+      const apiFromHome = data.items.filter((item) => homeBookmarkIds.has(item.id));
+      const homeBookmarks = readHomeBookmarks();
+      const merged = [...homeBookmarks, ...apiFromHome];
+
       if (forcedState === 'empty') {
         setBookmarks([]);
       } else {
-        setBookmarks(data.items);
+        setBookmarks(merged);
       }
       setLoading(false);
     });
@@ -84,9 +133,9 @@ export default function BookmarksPage() {
     .map((item) => withLanguageBookmark(item, language));
 
   const sorted = [...normalizedBookmarks].sort((a, b) => {
-    if (sortBy === 'oldest') return a.id - b.id;
+    if (sortBy === 'oldest') return getSortValue(a) - getSortValue(b);
     if (sortBy === 'az') return a.title.localeCompare(b.title);
-    return b.id - a.id;
+    return getSortValue(b) - getSortValue(a);
   });
 
   const totalPages = Math.max(1, Math.ceil(sorted.length / perPage));
@@ -98,6 +147,7 @@ export default function BookmarksPage() {
   }, [page, totalPages]);
 
   const removeBookmark = (id) => {
+    removeHomeBookmarkById(id);
     setBookmarks((prev) => prev.filter((item) => item.id !== id));
   };
 
@@ -162,7 +212,11 @@ export default function BookmarksPage() {
             </div>
 
             <div className="bookmark-actions">
-              <Link className="button" to={`/article/${item.id}`}>{text.open}</Link>
+              {item.externalUrl ? (
+                <a className="button" href={item.externalUrl}>{text.open}</a>
+              ) : (
+                <Link className="button" to={`/article/${item.id}`}>{text.open}</Link>
+              )}
               <button className="tiny-btn" type="button" onClick={() => removeBookmark(item.id)}>{text.delete}</button>
             </div>
           </article>

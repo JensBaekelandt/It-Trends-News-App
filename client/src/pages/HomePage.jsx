@@ -205,24 +205,11 @@ const filtered =
           </div>
 
           <div className="personalized-card">
-            <h4>Weekly Newsletter</h4>
-            <p>The most important stories delivered weekly.</p>
-
-            <input
-              type="email"
-              placeholder="Your email"
-              style={{
-                width: "100%",
-                marginTop: 10,
-                padding: 10,
-                borderRadius: 8,
-                border: "1px solid #d1d5db",
-              }}
-            />
-
-            <button className="button" style={{ marginTop: 10, width: "100%" }}>
-              Subscribe
-            </button>
+            <h4>Personalized feed</h4>
+            <p>Follow topics in Explore to tune what appears on your Home timeline.</p>
+            <Link className="button" to="/explore" style={{ marginTop: 10, width: "100%", textAlign: 'center' }}>
+              Explore topics
+            </Link>
           </div>
         </aside>
       </div>

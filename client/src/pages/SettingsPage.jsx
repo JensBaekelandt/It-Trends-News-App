@@ -205,7 +205,6 @@ export default function SettingsPage() {
                 {text.digestFrequency}
                 <select value={draft.digestFrequency} onChange={(e) => setDraft((prev) => ({ ...prev, digestFrequency: e.target.value }))}>
                   <option>Daily</option>
-                  <option>Weekly</option>
                   <option>Never</option>
                 </select>
               </label>

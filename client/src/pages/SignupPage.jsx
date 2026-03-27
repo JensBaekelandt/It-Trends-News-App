@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
+import { useAppContext } from '../state/AppContext';
 
 export default function SignupPage() {
   const navigate = useNavigate();
+  const { login } = useAppContext();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,8 +15,9 @@ export default function SignupPage() {
     event.preventDefault();
     setError('');
     try {
-      await api.signup({ name, email, password });
-      navigate('/login');
+      const result = await api.signup({ name, email, password });
+      login(result.user);
+      navigate('/explore');
     } catch {
       setError('Unable to create account.');
     }
