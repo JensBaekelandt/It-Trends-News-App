@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { exploreCopy, getLanguageCopy } from '../localization/copy';
 import { api } from '../services/api';
 import { useAppContext } from '../state/AppContext';
@@ -27,6 +27,8 @@ function readFollowedTopics() {
 export default function ExplorePage() {
   const { language } = useAppContext();
   const [topics, setTopics] = useState([]);
+  const [sources, setSources] = useState([]);
+  const [liveTrends, setLiveTrends] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAllTopics, setShowAllTopics] = useState(false);
@@ -47,10 +49,10 @@ export default function ExplorePage() {
     [topics, text]
   );
 
-    const query = searchTerm.trim().toLowerCase();
+  const query = searchTerm.trim().toLowerCase();
   const filteredTopics = localizedTopics.filter((topic) => `${topic.name} ${topic.description}`.toLowerCase().includes(query));
-  const filteredSources = text.sources.filter((source) => `${source.name} ${source.description}`.toLowerCase().includes(query));
-  const filteredTrends = text.liveTrendsData.filter((trend) => `${trend.tag} ${trend.title} ${trend.meta}`.toLowerCase().includes(query));
+  const filteredSources = sources.filter((source) => `${source.name} ${source.description}`.toLowerCase().includes(query));
+  const filteredTrends = liveTrends.filter((trend) => `${trend.tag} ${trend.title} ${trend.meta}`.toLowerCase().includes(query));
   const hasNoMatches = query.length > 0 && filteredTopics.length === 0 && filteredSources.length === 0 && filteredTrends.length === 0;
   const shouldShowTopicToggle = query.length === 0 && filteredTopics.length > TOPIC_PREVIEW_COUNT;
   const visibleTopics = shouldShowTopicToggle && !showAllTopics
@@ -63,18 +65,24 @@ export default function ExplorePage() {
     if (forcedState === 'loading') {
       setLoading(true);
       setTopics([]);
+      setSources([]);
+      setLiveTrends([]);
       return;
     }
 
     api.getExplore().then((data) => {
       if (forcedState === 'empty') {
         setTopics([]);
+        setSources([]);
+        setLiveTrends([]);
       } else {
-        setTopics(data.topics);
+        setTopics(data.topics || []);
+        setSources(data.sources || text.sources || []);
+        setLiveTrends(data.liveTrends || text.liveTrendsData || []);
       }
       setLoading(false);
     });
-  }, [searchParams]);
+  }, [searchParams, text.liveTrendsData, text.sources]);
 
   const handleToggleFollow = (topicId) => {
     setFollowedTopicIds((prev) => {
@@ -91,7 +99,7 @@ export default function ExplorePage() {
     return <section className="page-panel"><div className="loading-box">{text.loading}</div></section>;
   }
 
-  if (!topics.length) {
+  if (!topics.length && !sources.length && !liveTrends.length) {
     return (
       <section className="page-panel">
         <div className="empty-box">
@@ -178,14 +186,25 @@ export default function ExplorePage() {
                   </div>
                   <h3>{topic.name}</h3>
                   <p>{topic.description}</p>
-                  <button
-                    className={isFollowing ? 'button secondary' : 'button'}
-                    type="button"
-                    aria-pressed={isFollowing}
-                    onClick={() => handleToggleFollow(topic.id)}
-                  >
-                    {isFollowing ? text.following : text.follow}
-                  </button>
+                  <p className="trend-meta" style={{ marginTop: 6 }}>
+                    {text.topicArticleCount(topic.articleCount || 0)}
+                  </p>
+
+                  <div className="bookmark-actions" style={{ marginTop: 'auto', flexWrap: 'wrap' }}>
+                    <button
+                      className={isFollowing ? 'button secondary' : 'button'}
+                      type="button"
+                      aria-pressed={isFollowing}
+                      onClick={() => handleToggleFollow(topic.id)}
+                    >
+                      {isFollowing ? text.following : text.follow}
+                    </button>
+                    {topic.latestArticleId ? (
+                      <Link className="tiny-btn" to={`/home?topic=${encodeURIComponent(topic.name)}`}>
+                        {text.viewStories}
+                      </Link>
+                    ) : null}
+                  </div>
                 </article>
               );
             })}
@@ -200,6 +219,14 @@ export default function ExplorePage() {
               <article className="source-card" key={source.name}>
                 <h4>{source.name}</h4>
                 <p>{source.description}</p>
+                <div className="bookmark-actions" style={{ marginTop: 12, justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                  <span className="trend-meta">{text.sourceArticleCount(source.articleCount || 0)}</span>
+                  {source.latestArticleId ? (
+                    <Link className="tiny-btn" to={`/article/${source.latestArticleId}`}>
+                      {text.latestStory}
+                    </Link>
+                  ) : null}
+                </div>
               </article>
             ))}
           </div>
@@ -208,13 +235,30 @@ export default function ExplorePage() {
         <aside className="trends-rail">
           <h3>{text.liveTrends}</h3>
           <div className="trend-list">
-            {filteredTrends.map((item) => (
-              <article className="trend-item" key={item.title}>
-                <p className="trend-tag">{item.tag}</p>
-                <h4>{item.title}</h4>
-                <p className="trend-meta">{item.meta}</p>
-              </article>
-            ))}
+            {filteredTrends.map((item) => {
+              const content = (
+                <>
+                  <p className="trend-tag">{item.tag}</p>
+                  <h4>{item.title}</h4>
+                  <p className="trend-meta">{item.meta}</p>
+                </>
+              );
+
+              return item.articleId ? (
+                <Link
+                  key={item.id || item.title}
+                  to={`/article/${item.articleId}`}
+                  className="trend-item"
+                  style={{ display: 'block', color: 'inherit', textDecoration: 'none' }}
+                >
+                  {content}
+                </Link>
+              ) : (
+                <article className="trend-item" key={item.id || item.title}>
+                  {content}
+                </article>
+              );
+            })}
           </div>
 
           <div className="personalized-card">
@@ -224,6 +268,9 @@ export default function ExplorePage() {
                 ? text.personalizedWithTopics(followedTopicIds.length)
                 : text.personalizedText}
             </p>
+            <Link className="button" to="/home" style={{ marginTop: 12, width: '100%', textAlign: 'center' }}>
+              {text.goToHome}
+            </Link>
           </div>
         </aside>
       </div>

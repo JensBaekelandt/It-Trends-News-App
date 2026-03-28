@@ -1,28 +1,66 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useAppContext } from "../state/AppContext";
-import { api } from "../services/api";
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { useAppContext } from '../state/AppContext';
+import { api } from '../services/api';
+
+const FOLLOWED_TOPICS_KEY = 'followedExploreTopics';
+
+const CATEGORY_MAP = {
+  tech: ['TECHNOLOGY'],
+  sport: ['LIFESTYLE'],
+  politics: ['SCIENCE', 'FINANCE'],
+};
+
+const TOPIC_CATEGORY_MAP = {
+  technology: ['TECHNOLOGY'],
+  cybersecurity: ['TECHNOLOGY', 'SCIENCE'],
+  startups: ['FINANCE', 'TECHNOLOGY'],
+};
+
+function readFollowedTopics() {
+  try {
+    const raw = localStorage.getItem(FOLLOWED_TOPICS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
 
 export default function HomePage() {
   const { language } = useAppContext();
+  const [searchParams] = useSearchParams();
 
   const [feed, setFeed] = useState([]);
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [followedTopics, setFollowedTopics] = useState(() => readFollowedTopics());
 
   const [saved, setSaved] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("savedBookmarks")) || [];
+      return JSON.parse(localStorage.getItem('savedBookmarks')) || [];
     } catch {
       return [];
     }
   });
 
+  const topicFilterParam = String(searchParams.get('topic') || '').toLowerCase();
+  const followedCategories = useMemo(() => {
+    return followedTopics.flatMap((topicId) => {
+      if (topicId === 't1') return TOPIC_CATEGORY_MAP.technology;
+      if (topicId === 't2') return TOPIC_CATEGORY_MAP.cybersecurity;
+      if (topicId === 't3') return TOPIC_CATEGORY_MAP.startups;
+      return [];
+    });
+  }, [followedTopics]);
+
+  const topicFilterCategories = TOPIC_CATEGORY_MAP[topicFilterParam] || [];
+
   const toggleBookmark = (id) => {
     setSaved((prev) => {
       const exists = prev.includes(id);
       const updated = exists ? prev.filter((x) => x !== id) : [...prev, id];
-      localStorage.setItem("savedBookmarks", JSON.stringify(updated));
+      localStorage.setItem('savedBookmarks', JSON.stringify(updated));
       return updated;
     });
   };
@@ -32,69 +70,102 @@ export default function HomePage() {
       setFeed(data.items || []);
       setLoading(false);
     });
+
+    const syncFollowedTopics = () => setFollowedTopics(readFollowedTopics());
+    window.addEventListener('storage', syncFollowedTopics);
+
+    return () => {
+      window.removeEventListener('storage', syncFollowedTopics);
+    };
   }, []);
 
-  
-const CATEGORY_MAP = {
-  tech: ["TECHNOLOGY"],
-  sport: ["LIFESTYLE"],
-  politics: ["SCIENCE", "FINANCE"],
-};
+  const filtered = useMemo(() => {
+    let items = [...feed];
 
-const filtered =
-  filter === "all"
-    ? feed
-    : feed.filter((i) => CATEGORY_MAP[filter]?.includes(i.category));
+    if (topicFilterCategories.length > 0) {
+      items = items.filter((item) => topicFilterCategories.includes(item.category));
+    } else if (filter !== 'all') {
+      items = items.filter((item) => CATEGORY_MAP[filter]?.includes(item.category));
+    }
 
+    if (filter === 'all' && topicFilterCategories.length === 0 && followedCategories.length > 0) {
+      items.sort((a, b) => {
+        const aPreferred = followedCategories.includes(a.category) ? 1 : 0;
+        const bPreferred = followedCategories.includes(b.category) ? 1 : 0;
+        return bPreferred - aPreferred;
+      });
+    }
+
+    return items;
+  }, [feed, filter, followedCategories, topicFilterCategories]);
 
   const TEXT = {
     en: {
-      title: "For You",
-      subtitle: "Curated stories based on your interests",
+      title: topicFilterParam ? 'Topic Stories' : 'For You',
+      subtitle: topicFilterParam
+        ? 'Showing stories related to the selected topic.'
+        : followedTopics.length > 0
+          ? 'Curated stories with priority for your followed topics'
+          : 'Curated stories based on your interests',
       filters: {
-        all: "All Stories",
-        tech: "Tech",
-        sport: "Sport",
-        politics: "Politics",
-        manage: "+ Manage",
+        all: 'All Stories',
+        tech: 'Tech',
+        sport: 'Sport',
+        politics: 'Politics',
+        manage: '+ Manage',
       },
+      open: 'Open',
+      trending: 'Trending',
+      personalizedTitle: 'Personalized feed',
+      personalizedText: 'Follow topics in Explore to tune what appears on your Home timeline.',
+      followedText: `You are following ${followedTopics.length} topic${followedTopics.length === 1 ? '' : 's'}. Explore is now influencing the story order here.`,
+      exploreTopics: 'Explore topics',
+      clearTopicFilter: 'Clear topic filter',
     },
     nl: {
-      title: "Voor jou",
-      subtitle: "Geselecteerde verhalen op basis van jouw interesses",
+      title: topicFilterParam ? 'Verhalen per onderwerp' : 'Voor jou',
+      subtitle: topicFilterParam
+        ? 'Toont verhalen die passen bij het gekozen onderwerp.'
+        : followedTopics.length > 0
+          ? 'Geselecteerde verhalen met voorrang voor je gevolgde onderwerpen'
+          : 'Geselecteerde verhalen op basis van jouw interesses',
       filters: {
-        all: "Alle verhalen",
-        tech: "Tech",
-        sport: "Sport",
-        politics: "Politiek",
-        manage: "+ Beheren",
+        all: 'Alle verhalen',
+        tech: 'Tech',
+        sport: 'Sport',
+        politics: 'Politiek',
+        manage: '+ Beheren',
       },
+      open: 'Open',
+      trending: 'Trending',
+      personalizedTitle: 'Gepersonaliseerde feed',
+      personalizedText: 'Volg onderwerpen in Verkennen om je Home-tijdlijn af te stemmen.',
+      followedText: `Je volgt ${followedTopics.length} onderwerp${followedTopics.length === 1 ? '' : 'en'}. Verkennen beïnvloedt nu de volgorde van de verhalen hier.`,
+      exploreTopics: 'Onderwerpen verkennen',
+      clearTopicFilter: 'Onderwerpfilter wissen',
     },
   }[language];
 
   return (
     <section className="page-panel">
       <div className="explore-layout">
-        
-        {/* LEFT SIDE */}
         <div>
           <header className="page-head">
             <h1>{TEXT.title}</h1>
             <p>{TEXT.subtitle}</p>
           </header>
 
-          {/* FILTERS */}
           <div className="filter-row">
-            {["all", "tech", "sport", "politics", "manage"].map((key) => {
+            {['all', 'tech', 'sport', 'politics', 'manage'].map((key) => {
               const active = key === filter;
 
-              if (key === "manage") {
+              if (key === 'manage') {
                 return (
                   <button
                     key={key}
                     className="tiny-btn"
-                    style={{ borderStyle: "dashed" }}
-                    onClick={() => (window.location.href = "/explore")}
+                    style={{ borderStyle: 'dashed' }}
+                    onClick={() => (window.location.href = '/explore')}
                   >
                     {TEXT.filters.manage}
                   </button>
@@ -104,35 +175,39 @@ const filtered =
               return (
                 <button
                   key={key}
-                  className={`tiny-btn ${active ? "filter-btn-active" : ""}`}
+                  className={`tiny-btn ${active && topicFilterCategories.length === 0 ? 'filter-btn-active' : ''}`}
                   onClick={() => setFilter(key)}
                 >
                   {TEXT.filters[key]}
                 </button>
               );
             })}
+
+            {topicFilterParam ? (
+              <Link className="tiny-btn" to="/home">
+                {TEXT.clearTopicFilter}
+              </Link>
+            ) : null}
           </div>
 
           {loading && <div className="loading-box">Loading…</div>}
 
-          {/* FEED */}
           {!loading &&
             filtered.map((item) => (
               <article key={item.id} className="card" style={{ marginTop: 20 }}>
-                
                 <div
                   style={{
                     height: 220,
                     borderRadius: 12,
-                    overflow: "hidden",
-                    border: "1px solid #e5e7eb",
+                    overflow: 'hidden',
+                    border: '1px solid #e5e7eb',
                     marginBottom: 10,
                   }}
                 >
                   <img
                     src={item.imageUrl}
                     alt={item.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 </div>
 
@@ -155,9 +230,9 @@ const filtered =
                       padding: 6,
                       width: 36,
                       height: 36,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                     onClick={() => toggleBookmark(item.id)}
                   >
@@ -173,16 +248,15 @@ const filtered =
                   </button>
 
                   <Link className="button" to={`/article/${item.id}`}>
-                    Open
+                    {TEXT.open}
                   </Link>
                 </div>
               </article>
             ))}
         </div>
 
-        {/* RIGHT SIDEBAR */}
         <aside className="trends-rail home-sidebar">
-          <h3>Trending</h3>
+          <h3>{TEXT.trending}</h3>
 
           <div className="trend-list">
             <article className="trend-item">
@@ -205,10 +279,10 @@ const filtered =
           </div>
 
           <div className="personalized-card">
-            <h4>Personalized feed</h4>
-            <p>Follow topics in Explore to tune what appears on your Home timeline.</p>
-            <Link className="button" to="/explore" style={{ marginTop: 10, width: "100%", textAlign: 'center' }}>
-              Explore topics
+            <h4>{TEXT.personalizedTitle}</h4>
+            <p>{followedTopics.length > 0 ? TEXT.followedText : TEXT.personalizedText}</p>
+            <Link className="button" to="/explore" style={{ marginTop: 10, width: '100%', textAlign: 'center' }}>
+              {TEXT.exploreTopics}
             </Link>
           </div>
         </aside>
