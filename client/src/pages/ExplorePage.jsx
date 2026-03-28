@@ -11,11 +11,26 @@ const topicImages = [
   'https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=900&auto=format&fit=crop',
 ];
 
+const FOLLOWED_TOPICS_KEY = 'followedExploreTopics';
+const TOPIC_PREVIEW_COUNT = 2;
+
+function readFollowedTopics() {
+  try {
+    const raw = window.localStorage.getItem(FOLLOWED_TOPICS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function ExplorePage() {
   const { language } = useAppContext();
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showAllTopics, setShowAllTopics] = useState(false);
+  const [followedTopicIds, setFollowedTopicIds] = useState(() => readFollowedTopics());
   const [searchParams] = useSearchParams();
   const text = getLanguageCopy(exploreCopy, language);
 
@@ -32,11 +47,15 @@ export default function ExplorePage() {
     [topics, text]
   );
 
-  const query = searchTerm.trim().toLowerCase();
+    const query = searchTerm.trim().toLowerCase();
   const filteredTopics = localizedTopics.filter((topic) => `${topic.name} ${topic.description}`.toLowerCase().includes(query));
   const filteredSources = text.sources.filter((source) => `${source.name} ${source.description}`.toLowerCase().includes(query));
   const filteredTrends = text.liveTrendsData.filter((trend) => `${trend.tag} ${trend.title} ${trend.meta}`.toLowerCase().includes(query));
   const hasNoMatches = query.length > 0 && filteredTopics.length === 0 && filteredSources.length === 0 && filteredTrends.length === 0;
+  const shouldShowTopicToggle = query.length === 0 && filteredTopics.length > TOPIC_PREVIEW_COUNT;
+  const visibleTopics = shouldShowTopicToggle && !showAllTopics
+    ? filteredTopics.slice(0, TOPIC_PREVIEW_COUNT)
+    : filteredTopics;
 
   useEffect(() => {
     const forcedState = (searchParams.get('state') || '').toLowerCase();
@@ -56,6 +75,17 @@ export default function ExplorePage() {
       setLoading(false);
     });
   }, [searchParams]);
+
+  const handleToggleFollow = (topicId) => {
+    setFollowedTopicIds((prev) => {
+      const next = prev.includes(topicId)
+        ? prev.filter((id) => id !== topicId)
+        : [...prev, topicId];
+
+      window.localStorage.setItem(FOLLOWED_TOPICS_KEY, JSON.stringify(next));
+      return next;
+    });
+  };
 
   if (loading) {
     return <section className="page-panel"><div className="loading-box">{text.loading}</div></section>;
@@ -122,24 +152,43 @@ export default function ExplorePage() {
 
           <div className="section-head">
             <h2>{text.trending}</h2>
-            <button className="link-btn" type="button">{text.viewAll}</button>
+            {shouldShowTopicToggle ? (
+              <button
+                className="link-btn"
+                type="button"
+                onClick={() => setShowAllTopics((prev) => !prev)}
+              >
+                {showAllTopics ? text.showLess : text.viewAll}
+              </button>
+            ) : null}
           </div>
 
-          <div className={`card-grid topics-grid ${filteredTopics.length === 1 ? 'single-topic-grid' : ''}`}>
-            {filteredTopics.map((topic, index) => (
-              <article className="card topic-card" key={topic.id}>
-                <div className="topic-image-wrap">
-                  <img
-                    className="topic-image"
-                    src={topicImages[index % topicImages.length]}
-                    alt={topic.name}
-                  />
-                </div>
-                <h3>{topic.name}</h3>
-                <p>{topic.description}</p>
-                <button className="button">{text.follow}</button>
-              </article>
-            ))}
+          <div className={`card-grid topics-grid ${visibleTopics.length === 1 ? 'single-topic-grid' : ''}`}>
+            {visibleTopics.map((topic, index) => {
+              const isFollowing = followedTopicIds.includes(topic.id);
+
+              return (
+                <article className="card topic-card" key={topic.id}>
+                  <div className="topic-image-wrap">
+                    <img
+                      className="topic-image"
+                      src={topicImages[index % topicImages.length]}
+                      alt={topic.name}
+                    />
+                  </div>
+                  <h3>{topic.name}</h3>
+                  <p>{topic.description}</p>
+                  <button
+                    className={isFollowing ? 'button secondary' : 'button'}
+                    type="button"
+                    aria-pressed={isFollowing}
+                    onClick={() => handleToggleFollow(topic.id)}
+                  >
+                    {isFollowing ? text.following : text.follow}
+                  </button>
+                </article>
+              );
+            })}
           </div>
 
           <div className="section-head section-top-gap">
@@ -170,7 +219,11 @@ export default function ExplorePage() {
 
           <div className="personalized-card">
             <h4>{text.personalizedTitle}</h4>
-            <p>{text.personalizedText}</p>
+            <p>
+              {followedTopicIds.length > 0
+                ? text.personalizedWithTopics(followedTopicIds.length)
+                : text.personalizedText}
+            </p>
           </div>
         </aside>
       </div>
