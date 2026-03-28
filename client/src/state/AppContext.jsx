@@ -5,7 +5,13 @@ const AppContext = createContext(null);
 export function AppProvider({ children }) {
   const [theme, setTheme] = useState(() => localStorage.getItem('preferredTheme') || 'light');
   const [language, setLanguage] = useState(() => localStorage.getItem('preferredLanguage') || 'en');
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+  try {
+    return JSON.parse(localStorage.getItem("appUser")) || null;
+  } catch {
+    return null;
+  }
+});
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -20,12 +26,19 @@ export function AppProvider({ children }) {
     document.documentElement.lang = language;
     localStorage.setItem('preferredLanguage', language);
   }, [language]);
-
+useEffect(() => {
+  if (user) {
+    localStorage.setItem("appUser", JSON.stringify(user));
+  } else {
+    localStorage.removeItem("appUser");
+  }
+}, [user]);
   const value = useMemo(
     () => ({
       theme,
       language,
       user,
+      setUser,
       isAuthenticated: Boolean(user),
       toggleTheme: () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light')),
       setLanguage,
