@@ -276,6 +276,38 @@ app.put('/api/settings', (req, res) => {
   res.json({ settings: store.settings });
 });
 
+app.post('/api/auth/change-email', (req, res) => {
+  const { userId, newEmail } = req.body;
+
+  if (!userId || !newEmail) {
+    return res.status(400).json({ message: 'Missing fields' });
+  }
+
+  let user = store.users.find((u) => u.id === userId);
+
+  if (!user) {
+    user = { id: userId, name: "Unknown", email: newEmail };
+    store.users.push(user);
+    return res.json({ message: "Email updated", email: newEmail, user });
+  }
+
+  const exists = store.users.some(
+    (u) => u.email === newEmail && u.id !== userId
+  );
+
+  if (exists) {
+    return res.status(409).json({ message: 'Email already exists' });
+  }
+
+  user.email = newEmail;
+
+  return res.json({
+    message: "Email updated",
+    email: newEmail,
+    user,
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

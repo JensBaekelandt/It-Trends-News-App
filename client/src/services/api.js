@@ -1,5 +1,6 @@
 const API_BASE = 'http://localhost:4000/api';
 
+
 async function request(path, options = {}) {
   const response = await fetch(`${API_BASE}${path}`, {
     headers: {
@@ -9,12 +10,20 @@ async function request(path, options = {}) {
     ...options,
   });
 
-  if (!response.ok) {
-    throw new Error(`API error: ${response.status}`);
+  let data = null;
+  try {
+    data = await response.json();
+  } catch {
+    data = null;
   }
 
-  return response.json();
+  if (!response.ok) {
+    return { error: true, status: response.status, data };
+  }
+
+  return data;
 }
+
 
 export const api = {
   getExplore: () => request('/explore'),
@@ -54,6 +63,12 @@ export const api = {
     }),
   resetPassword: (payload) =>
     request('/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  changeEmail: (payload) =>
+    request('/auth/change-email', {
       method: 'POST',
       body: JSON.stringify(payload),
     }),
