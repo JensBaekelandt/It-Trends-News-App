@@ -1351,3 +1351,10 @@ html.dark .related-section {
   border-color: #137fec !important;
 }
 
+
+.settings-side {
+  position: static !important;
+  top: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+}
