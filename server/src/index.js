@@ -13,11 +13,57 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 const app = express();
 const port = process.env.PORT || 4000;
 
+const TOPIC_CATEGORY_MAP = {
+  technology: ['TECHNOLOGY'],
+  cybersecurity: ['TECHNOLOGY', 'SCIENCE'],
+  startups: ['FINANCE', 'TECHNOLOGY'],
+};
+
 function parseSummaryJson(textContent) {
   const normalized = textContent.trim();
   const fencedMatch = normalized.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
   const jsonText = fencedMatch?.[1] || normalized;
   return JSON.parse(jsonText);
+}
+
+function getTopicCategories(topicName) {
+  return TOPIC_CATEGORY_MAP[String(topicName || '').toLowerCase()] || [];
+}
+
+function buildExplorePayload() {
+  const topics = store.topics.map((topic) => {
+    const categories = getTopicCategories(topic.name);
+    const relatedArticles = store.articles.filter((article) => categories.includes(article.category));
+    const latestArticle = relatedArticles[0] || null;
+
+    return {
+      ...topic,
+      articleCount: relatedArticles.length,
+      latestArticleId: latestArticle?.id || null,
+    };
+  });
+
+  const sources = Array.from(new Set(store.articles.map((article) => article.source))).map((sourceName) => {
+    const sourceArticles = store.articles.filter((article) => article.source === sourceName);
+    const latestArticle = sourceArticles[0] || null;
+
+    return {
+      name: sourceName,
+      description: latestArticle?.summary || 'Latest coverage from this source.',
+      articleCount: sourceArticles.length,
+      latestArticleId: latestArticle?.id || null,
+    };
+  });
+
+  const liveTrends = store.articles.slice(0, 3).map((article) => ({
+    id: `trend-${article.id}`,
+    articleId: article.id,
+    tag: article.category,
+    title: article.title,
+    meta: `${article.savedAgo} • ${article.source}`,
+  }));
+
+  return { topics, sources, liveTrends };
 }
 
 async function generateAnthropicSummary(article, language = 'en') {
@@ -148,7 +194,7 @@ app.post('/api/auth/reset-password', (req, res) => {
 });
 
 app.get('/api/explore', (_req, res) => {
-  res.json({ topics: store.topics });
+  res.json(buildExplorePayload());
 });
 
 app.get('/api/bookmarks', (_req, res) => {
