@@ -16,7 +16,7 @@ export default function SignupPage() {
     setError('');
     try {
       const result = await api.signup({ name, email, password });
-      login(result.user);
+      login(  {...result.user, bookmarks: result.user.bookmarks || [],});
       navigate('/explore');
     } catch {
       setError('Unable to create account.');

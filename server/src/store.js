@@ -5,6 +5,7 @@ export const store = {
       name: 'Alex Rivera',
       email: 'alex@example.com',
       password: 'password123',
+      bookmarks: [12, 9]
     },
   ],
   settings: {
