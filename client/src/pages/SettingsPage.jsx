@@ -274,16 +274,6 @@ export default function SettingsPage() {
                 </button>
               </div>
 
-              <div className="settings-row">
-                <div>
-                  <p className="settings-row-title">{text.googleAccount}</p>
-                  <p className="settings-row-sub">{text.connected}</p>
-                </div>
-                <button type="button" className="tiny-btn">
-                  {text.disconnect}
-                </button>
-              </div>
-
             </div>
           </section>
 
