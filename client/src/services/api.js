@@ -27,7 +27,13 @@ async function request(path, options = {}) {
 
 export const api = {
   getExplore: () => request('/explore'),
-  getBookmarks: () => request('/bookmarks'),
+  getBookmarks: (userId) => request(`/bookmarks?userId=${userId}`),
+  toggleBookmark: (payload) =>
+  request('/bookmarks/toggle', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }),
+  getArticles: () => request('/articles'),
   getArticle: (id) => request(`/articles/${id}`),
   generateArticleSummary: (id, payload) =>
     request(`/articles/${id}/summary`, {

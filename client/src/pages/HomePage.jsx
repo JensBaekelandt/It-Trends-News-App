@@ -28,21 +28,14 @@ function readFollowedTopics() {
 }
 
 export default function HomePage() {
-  const { language } = useAppContext();
+  const { language,user } = useAppContext();
   const [searchParams] = useSearchParams();
 
+  const [saved, setSaved] = useState([]);
   const [feed, setFeed] = useState([]);
   const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(true);
   const [followedTopics, setFollowedTopics] = useState(() => readFollowedTopics());
-
-  const [saved, setSaved] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('savedBookmarks')) || [];
-    } catch {
-      return [];
-    }
-  });
 
   const topicFilterParam = String(searchParams.get('topic') || '').toLowerCase();
   const followedCategories = useMemo(() => {
@@ -56,28 +49,39 @@ export default function HomePage() {
 
   const topicFilterCategories = TOPIC_CATEGORY_MAP[topicFilterParam] || [];
 
-  const toggleBookmark = (id) => {
-    setSaved((prev) => {
-      const exists = prev.includes(id);
-      const updated = exists ? prev.filter((x) => x !== id) : [...prev, id];
-      localStorage.setItem('savedBookmarks', JSON.stringify(updated));
-      return updated;
-    });
-  };
+  // const toggleBookmark = (id) => {
+  //   setSaved((prev) => {
+  //     const exists = prev.includes(id);
+  //     const updated = exists ? prev.filter((x) => x !== id) : [...prev, id];
+  //     localStorage.setItem(`savedBookmarks_${user.id}`, JSON.stringify(updated));
+  //     return updated;
+  //   });
+  // };
+  const toggleBookmark = async (id) => {
+  if (!user) return;
 
+  const res = await api.toggleBookmark({
+    userId: user.id,
+    articleId: id,
+  });
+
+  setSaved(res.bookmarks);
+};
   useEffect(() => {
-    api.getBookmarks().then((data) => {
-      setFeed(data.items || []);
+    if (!user) return;
+
+    Promise.all([
+      api.getArticles(),
+      api.getBookmarks(user.id),
+    ]).then(([articlesRes, bookmarksRes]) => {
+      setFeed(articlesRes.items || []);
+
+      const ids = (bookmarksRes.items || []).map((item) => item.id);
+      setSaved(ids);
+
       setLoading(false);
     });
-
-    const syncFollowedTopics = () => setFollowedTopics(readFollowedTopics());
-    window.addEventListener('storage', syncFollowedTopics);
-
-    return () => {
-      window.removeEventListener('storage', syncFollowedTopics);
-    };
-  }, []);
+  }, [user]);
 
   const filtered = useMemo(() => {
     let items = [...feed];

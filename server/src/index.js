@@ -155,7 +155,7 @@ app.post('/api/auth/login', (req, res) => {
   if (!user) {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
-  return res.json({ user: { id: user.id, name: user.name, email: user.email } });
+  return res.json({ user: { id: user.id, name: user.name, email: user.email, bookmarks: user.bookmarks || [],} });
 });
 
 app.post('/api/auth/signup', (req, res) => {
@@ -167,11 +167,11 @@ app.post('/api/auth/signup', (req, res) => {
   if (exists) {
     return res.status(409).json({ message: 'Email already exists' });
   }
-  const user = { id: `u${store.users.length + 1}`, name, email, password };
+  const user = { id: `u${store.users.length + 1}`, name, email, password, bookmarks: [],};
   store.users.push(user);
   return res.status(201).json({
     message: 'Account created',
-    user: { id: user.id, name: user.name, email: user.email },
+    user: { id: user.id, name: user.name, email: user.email, bookmarks: user.bookmarks || [], },
   });
 });
 
@@ -197,8 +197,43 @@ app.get('/api/explore', (_req, res) => {
   res.json(buildExplorePayload());
 });
 
-app.get('/api/bookmarks', (_req, res) => {
+app.get('/api/articles', (_req, res) => {
   res.json({ items: store.articles });
+});
+
+app.get('/api/bookmarks', (req, res) => {
+  const userId = req.query.userId;
+
+  const user = store.users.find(u => u.id === userId);
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  const items = store.articles.filter(article =>
+    user.bookmarks.includes(article.id)
+  );
+
+  res.json({ items });
+});
+
+app.post('/api/bookmarks/toggle', (req, res) => {
+  const { userId, articleId } = req.body;
+
+  const user = store.users.find(u => u.id === userId);
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  const id = Number(articleId);
+  const exists = user.bookmarks.includes(id);
+
+  if (exists) {
+    user.bookmarks = user.bookmarks.filter(b => b !== id);
+  } else {
+    user.bookmarks.push(id);
+  }
+
+  res.json({ bookmarks: user.bookmarks });
 });
 
 app.get('/api/articles/:id', (req, res) => {
