@@ -108,12 +108,14 @@ export default function ArticleViewPage() {
       </div>
 
       <article className="article-body">
-        <p>{translatedArticle.content}</p>
-        <h2>{text.sectionOne}</h2>
+        {translatedArticle.content.split('\n').map((para, index) => (
+          <p key={index}>{para}</p>
+        ))}
+        {/* <h2>{text.sectionOne}</h2>
         <p>{text.sectionOneBody}</p>
         <blockquote>"{text.quote}"</blockquote>
         <h2>{text.sectionTwo}</h2>
-        <p>{text.sectionTwoBody}</p>
+        <p>{text.sectionTwoBody}</p> */}
       </article>
 
       <div className="tag-row">
