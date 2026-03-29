@@ -210,14 +210,14 @@ export const articleCopy = {
       12: {
         title: 'EU AI Act: What changes for product teams',
         summary: 'A practical view on compliance impact for software teams.',
-        content:
-          'The EU AI Act introduces risk-based obligations. Teams should classify systems, document datasets and establish human oversight where required.',
+        // content:
+        //   'The EU AI Act introduces risk-based obligations. Teams should classify systems, document datasets and establish human oversight where required.',
       },
       11: {
         title: 'How edge AI is moving into mainstream apps',
         summary: 'On-device models are becoming practical for modern products.',
-        content:
-          'Edge AI helps reduce latency and preserve privacy by processing data locally. Tooling is improving for mobile and desktop deployment.',
+        // content:
+        //   'Edge AI helps reduce latency and preserve privacy by processing data locally. Tooling is improving for mobile and desktop deployment.',
       },
     },
   },
@@ -255,37 +255,37 @@ export const articleCopy = {
         title: 'EU AI Act: wat verandert er voor productteams',
         summary: 'Een praktisch overzicht van de compliance-impact voor softwareteams.',
         content:
-          'De EU AI Act introduceert verplichtingen op basis van risiconiveaus. Teams moeten systemen classificeren, datasets documenteren en menselijke controle waar nodig voorzien.',
+          'De EU AI Act introduceert een uitgebreid, risicogebaseerd kader dat een aanzienlijke impact zal hebben op hoe productteams AI-systemen ontwerpen, bouwen en implementeren. Toepassingen worden ingedeeld in risiconiveaus—minimaal, beperkt, hoog en onaanvaardbaar—waarbij elk niveau specifieke nalevingsverplichtingen heeft.\n\nVoor productteams is de eerste stap classificatie. Begrijpen of je systeem in de hoog-risicocategorie valt—zoals AI gebruikt in werving, gezondheidszorg of kritieke infrastructuur—is essentieel. Hoog-risicosystemen vereisen grondige documentatie, waaronder transparantie van datasets, uitlegbaarheid van modellen en gedetailleerde risicobeoordelingen.\n\nTeams moeten ook mechanismen voor menselijk toezicht implementeren om ervoor te zorgen dat geautomatiseerde beslissingen kunnen worden gemonitord en indien nodig aangepast. Dit kan veranderingen vereisen in UX-ontwerp, interne workflows en governance-structuren.\n\nDaarnaast wordt databeheer een centraal aandachtspunt. Teams moeten databronnen documenteren, kwaliteit en bias verminderen en audittrails bijhouden. Niet-naleving kan leiden tot aanzienlijke boetes, waardoor vroege afstemming met juridische en compliance-teams cruciaal is.\n\nUiteindelijk is de EU AI Act niet alleen een regelgevende hindernis—het is een kans voor organisaties om meer betrouwbare, transparante en gebruikersgerichte AI-systemen te bouwen.',
       },
       11: {
         title: 'Hoe edge AI mainstream toepassingen binnenkomt',
         summary: 'On-device modellen worden praktischer voor moderne producten.',
         content:
-          'Edge AI verlaagt latency en beschermt privacy door data lokaal te verwerken. De tooling voor mobiele en desktopuitrol wordt steeds beter.',
+          'Edge AI maakt snel de overgang van een nichecapaciteit naar een mainstream functie in moderne toepassingen. Door data lokaal te verwerken op apparaten zoals smartphones, laptops en IoT-hardware, vermindert edge AI de latentie, verbetert het de privacy en maakt het realtime respons mogelijk.\n\nEen van de belangrijkste drijfveren achter deze verschuiving is de verbetering van hardware. Moderne chips zijn nu geoptimaliseerd voor AI-workloads, waardoor zelfs kleine apparaten complexe machine learning-modellen efficiënt kunnen uitvoeren. Tegelijkertijd is software tooling volwassen geworden, waardoor het eenvoudiger is voor ontwikkelaars om modellen op apparaten te implementeren en te beheren.\n\nVoor gebruikers betekent edge AI snellere interacties en offline functionaliteit. Functies zoals spraakherkenning, beeldverwerking en gepersonaliseerde aanbevelingen kunnen nu werken zonder cloudverbinding.\n\nPrivacy is een ander groot voordeel. Omdat data lokaal wordt verwerkt, hoeft gevoelige informatie niet naar externe servers te worden gestuurd, wat het risico op datalekken vermindert en naleving van regelgeving verbetert.\n\nToch blijven er uitdagingen. Ontwikkelaars moeten een balans vinden tussen modelgrootte, prestaties en energieverbruik. Het updaten van modellen op verspreide apparaten vereist ook robuuste implementatiestrategieën.\n\nOndanks deze uitdagingen is de richting duidelijk: edge AI wordt een fundamenteel onderdeel van de volgende generatie toepassingen.',
       },
       10: {
         title: '10 gezondste superfoods om toe te voegen in 2024',
         summary: 'Een praktische lijst met voedzame keuzes voor elke dag.',
         content:
-          'Evenwichtige voedingspatronen zijn makkelijker vol te houden wanneer maaltijden rond pure ingrediënten en eenvoudige routines worden opgebouwd.',
+          'Het opnemen van voedingsrijke superfoods in je dagelijkse dieet kan een blijvende impact hebben op je algehele gezondheid en welzijn. In plaats van te focussen op restrictief eten, raden experts aan om maaltijden op te bouwen rond hele, minimaal bewerkte ingrediënten.\n\nBladgroenten zoals spinazie en boerenkool blijven basisproducten vanwege hun hoge gehalte aan vitaminen en antioxidanten. Bessen, waaronder blauwe bessen en aardbeien, zijn rijk aan vezels en ondersteunen de hartgezondheid. Vette vis zoals zalm levert essentiële omega-3-vetzuren, die gelinkt zijn aan voordelen voor hersenen en hart.\n\nAndere opvallende superfoods zijn noten en zaden, die gezonde vetten en eiwitten bieden, evenals peulvruchten die plantaardige eiwitten en vezels leveren. Volkoren granen zoals quinoa en haver zorgen voor langdurige energie gedurende de dag.\n\nGefermenteerde voedingsmiddelen zoals yoghurt en kimchi ondersteunen de darmgezondheid door gunstige bacteriën te bevorderen. Ondertussen hebben ingrediënten zoals kurkuma en gember ontstekingsremmende eigenschappen.\n\nDe sleutel tot een gezond dieet is consistentie en eenvoud. Maaltijden vooraf plannen en een variatie van deze voedingsmiddelen opnemen maakt gebalanceerde voeding haalbaar en aangenaam.\n\nUiteindelijk kunnen kleine, duurzame veranderingen in je dagelijkse routine leiden tot grote gezondheidsvoordelen op de lange termijn.',
       },
       9: {
         title: 'Telescoop detecteert waterdamp op verre exoplaneet',
         summary: 'Nieuwe metingen verbeteren het inzicht in exoplaneetklimaten.',
         content:
-          'Observaties met moderne telescopen verbeteren voortdurend atmosferische modellen en de langetermijnkarakterisering van exoplaneten.',
+          'Astronomen hebben waterdamp ontdekt in de atmosfeer van een verre exoplaneet, wat opnieuw een mijlpaal is in het onderzoek naar werelden buiten ons zonnestelsel. Met behulp van geavanceerde telescopen konden onderzoekers de chemische samenstelling van de atmosfeer met ongekende precisie analyseren.\n\nDe aanwezigheid van waterdamp betekent niet noodzakelijk dat de planeet bewoonbaar is, maar het biedt wel cruciale inzichten in atmosferische processen en klimaatsystemen op verre planeten. Deze bevindingen helpen modellen te verfijnen die temperatuur, weerpatronen en chemische interacties voorspellen.\n\nModerne telescopen kunnen steeds beter subtiele variaties in licht opvangen wanneer planeten voor hun ster langs bewegen. Deze techniek, bekend als transitspectroscopie, stelt wetenschappers in staat specifieke moleculen te identificeren op basis van hoe ze licht absorberen.\n\nNaarmate de technologie verbetert, verwachten onderzoekers een bredere reeks atmosferische componenten te detecteren, inclusief mogelijke biosignaturen. Elke ontdekking draagt bij aan een beter begrip van planeetvorming en de diversiteit van omgevingen in het universum.\n\nDeze recente ontdekking benadrukt de snelle vooruitgang in exoplaneetonderzoek en bereidt de weg voor toekomstige missies gericht op het vinden van aarde-achtige werelden.',
       },
       8: {
         title: 'Quantum computing en de volgende veiligheidsgrens',
         summary: 'Waarom quantumbeleid nu een board-level onderwerp is.',
         content:
-          'Securityteams evalueren post-quantum migratiepaden terwijl regelgevers en standaardisatieorganisaties de richtlijnen versnellen.',
+          'Quantum computing ontwikkelt zich snel van een theoretisch concept naar een praktische technologie met verstrekkende gevolgen voor wereldwijde veiligheid. Naarmate quantumcomputers krachtiger worden, kunnen ze mogelijk veelgebruikte encryptiemethoden kraken die momenteel digitale communicatie beveiligen.\n\nDit heeft quantumgereedheid tot een strategische prioriteit gemaakt voor zowel overheden als bedrijven. Organisaties beginnen hun blootstelling aan quantumdreigingen te beoordelen en migratieplannen te ontwikkelen richting post-quantumcryptografie.\n\nSecurityteams evalueren welke systemen afhankelijk zijn van kwetsbare encryptiestandaarden en bepalen tijdlijnen voor upgrades naar quantum-resistente alternatieven. Tegelijk versnellen standaardisatie-instellingen en regelgevers hun inspanningen om richtlijnen en kaders te bieden voor een veilige overgang.\n\nNaast risico’s biedt quantum computing ook kansen. Het kan doorbraken mogelijk maken in domeinen zoals materiaalwetenschap, medicijnontwikkeling en optimalisatieproblemen die momenteel moeilijk oplosbaar zijn.\n\nDe onzekerheid rond tijdlijnen en mogelijkheden maakt planning echter lastig. Bedrijven moeten investeren met flexibiliteit, zodat ze voorbereid zijn zonder zich vast te leggen op onvolwassen technologieën.\n\nNaarmate het bewustzijn groeit, wordt quantumstrategie steeds vaker een onderwerp op directieniveau, wat het potentieel onderstreept om zowel veiligheid als innovatie te transformeren.',
       },
       7: {
         title: 'Centrale banken sturen op nieuwe beleidswijzigingen',
         summary: 'Markten reageren op nieuwe richtlijnen en renteverwachtingen.',
         content:
-          'Toekomstgerichte indicatoren tonen dat beleidsbeslissingen afhankelijk blijven van data terwijl inflatie geleidelijk normaliseert.',
+          'Centrale banken wereldwijd signaleren mogelijke veranderingen in hun monetair beleid nu de inflatie tekenen van afkoeling vertoont. Na een lange periode van renteverhogingen om prijsstijgingen te beteugelen, kiezen beleidsmakers nu voor een meer voorzichtige en datagedreven aanpak.\n\nRecente economische indicatoren suggereren dat inflatie geleidelijk stabiliseert, hoewel deze in veel regio’s nog boven de doelstelling ligt. Dit leidt tot speculatie over wanneer rentevoeten hun piek bereiken of mogelijk beginnen te dalen.\n\nFinanciële markten reageren snel op nieuwe signalen, waarbij obligatierentes, aandelenwaarderingen en valutamarkten zich aanpassen aan veranderende verwachtingen. Beleggers volgen communicatie van centrale banken nauwlettend voor aanwijzingen over toekomstig beleid.\n\nOndanks het verbeterende vooruitzicht blijft er onzekerheid. Factoren zoals geopolitieke spanningen, energieprijzen en arbeidsmarktdynamiek blijven invloed uitoefenen op inflatie.\n\nCentrale banken benadrukken dat beslissingen afhankelijk blijven van binnenkomende data, in plaats van vaste tijdschema’s. Deze flexibele aanpak moet het evenwicht bewaren tussen te veel verkrappen en te vroeg versoepelen.\n\nTerwijl de wereldeconomie deze overgang doormaakt, staan zowel beleidsmakers als investeerders voor een complexe en veranderende omgeving.',
       },
     },
   },
