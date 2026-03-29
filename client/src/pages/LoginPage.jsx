@@ -16,7 +16,7 @@ export default function LoginPage() {
     try {
       const result = await api.login({ email, password });
       login({ ...result.user, bookmarks: result.user.bookmarks || [], });
-      navigate('/explore');
+      navigate('/home');
     } catch {
       setError('Sign in failed. Please check your credentials.');
     }
